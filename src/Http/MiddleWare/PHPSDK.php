@@ -41,7 +41,6 @@ class PHPSDK
     {
         $config = (object) [
             "APIKey"=>env('APIToolKit_API_KEY', null),
-            "ProjectID"=>env('APIToolKit_PROJECT_ID', null),
             "RootURL"=>env('APIToolKit_ROOT_URL', null)
         ];
         if ($config->APIKey == null) {

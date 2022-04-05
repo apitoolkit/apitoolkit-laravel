@@ -8,12 +8,12 @@ use Closure;
 
 class APIKeyInvalid extends Exception {
     public function msg() {
-      //error message
-      $message = 'Error on line '.$this->getLine().' in '.$this->getFile()
-      .': '.$this->getMessage();
-      return $message;
+        //error message
+        $message = 'Error on line '.$this->getLine().' in '.$this->getFile()
+        .': '.$this->getMessage();
+        return $message;
     }
-  }
+}
   
 class PHPSDK
 {
@@ -23,6 +23,10 @@ class PHPSDK
             throw new APIKeyInvalid("API Key must be provided when associating the APIToolkit middleware to a route!");
             return false;
         }
+        $this->useAPIToolkit($request, $next, $APIKey);
+    }
+    public function useAPIToolkit($request, $next, $APIKey) {
+
         return $next($request);
     }
 }

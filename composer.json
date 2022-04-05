@@ -1,0 +1,17 @@
+{
+    "name": "edinyangaottoho/apitoolkit-php-sdk",
+    "description": "A comprehensive PHP SDK wrapper for APIToolkit.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Edinyanga O. Ottoho",
+            "email": "elzucky@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {"APIToolkit\\SDKs\\": "src/"}
+    },
+    "require": {}
+}

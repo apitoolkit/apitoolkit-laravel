@@ -12,7 +12,7 @@ class APIKeyInvalid extends Exception {
     public function msg() {
         //error message
         $message = 'Error on line '.$this->getLine().' in '.$this->getFile()
-        .': '.$this->getMessage();
+        .'=> '.$this->getMessage();
         return $message;
     }
 }
@@ -95,10 +95,28 @@ class PHPSDK
     }
     public function useAPIToolkit($request, $next, $config) {
         $start = time();
+        
         $since = time() - $start;
         
-        $payload = [
-
+        $payload = (object) [
+            "Duration"=>        $since,
+            "Host"=>            "",
+            "Method"=>          "",
+            "ProjectID"=>       "",
+            "ProtoMajor"=>      "",
+            "ProtoMinor"=>      "",
+            "QueryParams"=>     "",
+            "PathParams"=>      "",
+            "RawURL"=>          "",
+            "Referer"=>         "",
+            "RequestBody"=>     "",
+            "RequestHeaders"=>  "",
+            "ResponseBody"=>    "",
+            "ResponseHeaders"=> "",
+            "SdkType"=>         "",
+            "StatusCode"=>      "",
+            "Timestamp"=>       time(),
+            "URLPath"=>         "",
         ];
 
         $this->publishMessage($payload);

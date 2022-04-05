@@ -5,6 +5,7 @@ namespace APIToolkit\SDKs;
 use Closure;
 use Illuminate\Support\Facades\Http;
 use Google\Cloud\PubSub\PubSubClient;
+use Exception;
 
 //use APIToolkit\SDKS\PHPSDK;
 

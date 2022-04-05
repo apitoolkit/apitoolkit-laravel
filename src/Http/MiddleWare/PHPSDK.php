@@ -94,33 +94,37 @@ class PHPSDK
         ]);
     }
     public function useAPIToolkit($request, $next, $config) {
+
+        $response = $next($request);
+
         $start = time();
         
         $since = time() - $start;
         
         $payload = (object) [
             "Duration"=>        $since,
-            "Host"=>            "",
-            "Method"=>          "",
-            "ProjectID"=>       "",
-            "ProtoMajor"=>      "",
-            "ProtoMinor"=>      "",
-            "QueryParams"=>     "",
-            "PathParams"=>      "",
-            "RawURL"=>          "",
-            "Referer"=>         "",
-            "RequestBody"=>     "",
-            "RequestHeaders"=>  "",
-            "ResponseBody"=>    "",
-            "ResponseHeaders"=> "",
-            "SdkType"=>         "",
-            "StatusCode"=>      "",
+            "Host"=>            $request->getHttpHost(),
+            "Method"=>          $request->method,
+            "ProjectID"=>       $this->client->metadata->PubsubProjectId,
+            "ProtoMajor"=>      1,
+            "ProtoMinor"=>      1,
+            "QueryParams"=>     $request->all(),
+            "PathParams"=>      $request->route()->parameters(),
+            "RawURL"=>          $request->fullUrl(),
+            "Referrer"=>        $request->header('referrer'),
+            "RequestBody"=>     $request->getContent(),
+            "RequestHeaders"=>  $request->header(),
+            "ResponseBody"=>    $response->getConent(),
+            "ResponseHeaders"=> $response->header(),
+            "SdkType"=>         "apitoolkit-php-sdk",
+            "StatusCode"=>      $response->status(),
             "Timestamp"=>       time(),
-            "URLPath"=>         "",
+            "URLPath"=>         $request->path(),
         ];
 
         $this->publishMessage($payload);
 
-        return $next($request);
+        return $response;
+        
     }
 }

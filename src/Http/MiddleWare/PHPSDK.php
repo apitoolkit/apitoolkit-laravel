@@ -59,11 +59,13 @@ class PHPSDK
         $APIKey = $config->APIKey;
 
         $clientmetadata = Http::withoutVerifying()->withToken($APIKey)
-            ->get($url."/api/client_metadata")->json();
+            ->get($url."/api/client_metadata");
         
         if ($clientmetadata->failed()) {
             return new ClientMetaDataError("Unable to query APIToolkit for client metadata");
         }
+
+        $clientmetadata = $clientmetadata->json();
 
         $client = new PubSubClient([
             'projectId' => $clientmetadata["PubsubProjectId"]

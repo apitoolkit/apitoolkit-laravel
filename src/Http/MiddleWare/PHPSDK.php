@@ -67,6 +67,8 @@ class PHPSDK
 
         $clientmetadata = $clientmetadata->json();
 
+        print_r($clientmetadata);
+
         $client = new PubSubClient([
             'projectId' => $clientmetadata["PubsubProjectId"]
         ]);

@@ -58,7 +58,7 @@ class PHPSDK
         
         $APIKey = $config->APIKey;
 
-        $clientmetadata = Http::withToken($APIKey)
+        $clientmetadata = Http::withoutVerifying()->withToken($APIKey)
             ->get($url."/api/client_metadata")->json();
         
         if ($clientmetadata->failed()) {

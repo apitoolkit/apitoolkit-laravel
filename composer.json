@@ -13,5 +13,8 @@
     "autoload": {
         "psr-4": {"APIToolkit\\SDKs\\": "src/Http/MiddleWare"}
     },
-    "require": {}
+    "require": {
+        "guzzlehttp/guzzle": "^7.4",
+        "google/cloud-pubsub": "^1.35"
+    }
 }

@@ -11,7 +11,7 @@
     ],
     "minimum-stability": "stable",
     "autoload": {
-        "psr-4": {"APIToolkit\\SDKs\\": "src/"}
+        "psr-4": {"APIToolkit\\SDKs\\": "src/Http/MiddleWare"}
     },
     "require": {}
 }

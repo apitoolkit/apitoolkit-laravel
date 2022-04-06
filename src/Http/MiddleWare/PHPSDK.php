@@ -76,7 +76,7 @@ class PHPSDK
             "keyFile"=>$credentials
         ]);
 
-        $topic = $client->createTopic(env('APIToolKit_TOPIC_ID', "apitoolkit-go-client"));
+        $topic = $client->topic(env('APIToolKit_TOPIC_ID', "apitoolkit-go-client"));
 
         $cl = (object) [
             "pubsubClient"=>$client,

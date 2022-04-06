@@ -95,7 +95,7 @@ class PHPSDK
             "client"=>$clientmetadata
         ];
     }
-    public function publishMessage($payload) {
+    public function publishMessage($payload, $request, $response) {
 
         $credentials = $this->getCredentials();
 
@@ -162,6 +162,6 @@ class PHPSDK
             "URLPath"=>         $request->path(),
         ];
 
-        $this->publishMessage($payload);
+        $this->publishMessage($payload, $request, $response);
     }
 }

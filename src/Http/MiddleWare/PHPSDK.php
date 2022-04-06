@@ -112,7 +112,7 @@ class PHPSDK
             "Duration"=>        $since,
             "Host"=>            $request->getHttpHost(),
             "Method"=>          $request->method,
-            "ProjectID"=>       $this->client->metadata->PubsubProjectId,
+            "ProjectID"=>       $this->client->metadata->pubsub_project_id,
             "ProtoMajor"=>      1,
             "ProtoMinor"=>      1,
             "QueryParams"=>     $request->all(),

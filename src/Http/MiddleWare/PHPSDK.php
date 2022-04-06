@@ -40,7 +40,7 @@ class ClientMetaDataError extends Exception {
 
 class PHPSDK
 {
-    
+
     public $start;
 
     public $client;
@@ -112,8 +112,16 @@ class PHPSDK
     }
     public function terminate($request, $response) {
         
-        $since = time() - $this->start;
+        $this->end = time();
 
+        $this->log($request, $response);
+        
+    }
+
+    public function log($request, $response) {
+
+        $since = $this->end - $this->start;
+        
         $payload = (object) [
             "Duration"=>        $since,
             "Host"=>            $request->getHttpHost(),
@@ -136,6 +144,5 @@ class PHPSDK
         ];
 
         $this->publishMessage($payload);
-        
     }
 }

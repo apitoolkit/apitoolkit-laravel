@@ -78,16 +78,17 @@ class PHPSDK
 
         $topic = $client->topic(env('APIToolKit_TOPIC_ID', "apitoolkit-go-client"));
 
-        $cl = (object) [
+        $client_ = (object) [
             "pubsubClient"=>$client,
 		    "phpReqsTopic"=>$topic,
 		    "config"=>$config,
 		    "metadata"=>(object) $clientmetadata
         ];
 
-        $this->client = $cl;
+        $this->client = $client_;
+        $this->start = time();
 
-        $this->useAPIToolkit($request, $next);
+        return $next($request);
 
     }
     public function publishMessage($payload) {
@@ -104,13 +105,9 @@ class PHPSDK
             "publishTime"=>$timestamp
         ]);
     }
-    public function useAPIToolkit($request, Closure $next) {
-
-        $start = time();
-
-        $response = $next($request);
+    public function terminate($request, $response) {
         
-        $since = time() - $start;
+        $since = time() - $this->start;
 
         $payload = (object) [
             "Duration"=>        $since,
@@ -134,8 +131,6 @@ class PHPSDK
         ];
 
         $this->publishMessage($payload);
-
-        return $response;
         
     }
 }

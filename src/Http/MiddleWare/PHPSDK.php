@@ -47,7 +47,7 @@ class PHPSDK
     {
         $request->start_time = microtime(true);
 
-        $clientmetadata = $this->getCredentials();
+        $clientmetadata = $this->getCredentials($request);
 
         if ($clientmetadata["APIKey"] == null) {
             return new APIKeyInvalid("You haven't provided a key. Please specify a valid key 'APIToolKit_API_KEY' in your .env file");
@@ -66,7 +66,9 @@ class PHPSDK
         return $next($request);
 
     }
-    public function getCredentials() {
+    public function getCredentials($request) {
+
+        $start = microtime(true);
 
         $config = (object) [
             "APIKey"=>env('APIToolKit_API_KEY', null),
@@ -89,6 +91,10 @@ class PHPSDK
         }
         $clientmetadata = $clientmetadata->json();
 
+        $end = microtime(true);
+
+        $request->start_time += ($end - $start);
+
         return [
             "APIKey"=>$config->APIKey,
             "RootURL"=>$url,
@@ -97,7 +103,7 @@ class PHPSDK
     }
     public function publishMessage($payload, $request, $response) {
 
-        $credentials = $this->getCredentials();
+        $credentials = $this->getCredentials($request);
 
         $projectId = $credentials["client"]["pubsub_project_id"];
 
@@ -156,6 +162,6 @@ class PHPSDK
             "URLPath"=>         $request->path(),
         ];
 
-        $this->publishMessage($payload, $request, $response);
+        $this->publishMessage($payload, $request);
     }
 }

@@ -62,7 +62,7 @@ class PHPSDK
 
         $credentials = $clientmetadata["client"]["pubsub_push_service_account"];
 
-        $request->projectId = $clientmetadata["client"]["pubsub_project_id"];
+        $request->projectId = $clientmetadata["project_id"];
 
         return $next($request);
 

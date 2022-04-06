@@ -69,11 +69,13 @@ class PHPSDK
         
         print_r($clientmetadata);
 
+        $credentials = $clientmetadata["pubsub_push_service_account"];
+
         $client = new PubSubClient([
             "projectId"=>$clientmetadata["pubsub_project_id"],
             "credentials"=>[
-                "private_key"=>$clientmetadata["private_key"],
-                "client_email"=>$clientmetadata["client_email"]
+                "private_key"=>$credentials["private_key"],
+                "client_email"=>$credentials["client_email"]
             ]
         ]);
 

@@ -124,7 +124,7 @@ class PHPSDK
             "RawURL"=>          $request->fullUrl(),
             "Referrer"=>        $request->header('referrer'),
             "RequestBody"=>     $request->getContent(),
-            "RequestHeaders"=>  $request->header(),
+            "RequestHeaders"=>  $request->headers,
             "ResponseBody"=>    $response->getContent(),
             "ResponseHeaders"=> $response->headers,
             "SdkType"=>         "apitoolkit-php-sdk",

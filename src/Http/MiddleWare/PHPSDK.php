@@ -105,8 +105,6 @@ class PHPSDK
         $response = $next($request);
         
         $since = time() - $start;
-
-        print_r($this->client);
         
         $payload = (object) [
             "Duration"=>        $since,

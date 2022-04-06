@@ -80,7 +80,7 @@ class PHPSDK
             "pubsubClient"=>$client,
 		    "phpReqsTopic"=>$topic,
 		    "config"=>$config,
-		    "metadata"=>$clientmetadata
+		    "metadata"=>(object) $clientmetadata
         ];
 
         $this->client = $cl;

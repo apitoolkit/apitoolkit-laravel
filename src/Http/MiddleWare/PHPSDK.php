@@ -92,7 +92,7 @@ class PHPSDK
 
         $this->pubSub = $client_;
         $this->start = time();
-
+        print_r($this->pubSub);
         return $next($request);
 
     }
@@ -121,8 +121,6 @@ class PHPSDK
     public function log($request, $response) {
 
         $since = $this->end - $this->start;
-
-        print_r($this);
         
         $payload = (object) [
             "Duration"=>        $since,

@@ -145,8 +145,6 @@ class PHPSDK
     public function log($request, $response) {
 
         $since = $this->end - $this->start;
-        
-        print_r($since / 1000000);
 
         $payload = (object) [
             "Duration"=>        $since,

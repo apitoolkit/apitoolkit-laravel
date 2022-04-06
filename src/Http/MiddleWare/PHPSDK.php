@@ -49,7 +49,8 @@ class PHPSDK
 
     public function handle($request, Closure $next)
     {
-        
+        $this->start = microtime(true);
+
         $clientmetadata = $this->getCredentials();
 
         if ($clientmetadata["APIKey"] == null) {
@@ -65,8 +66,6 @@ class PHPSDK
         $credentials = $clientmetadata["client"]["pubsub_push_service_account"];
 
         $this->projectId = $clientmetadata["client"]["pubsub_project_id"];
-
-        $this->start = microtime(true);
 
         return $next($request);
 

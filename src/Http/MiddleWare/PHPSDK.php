@@ -159,7 +159,7 @@ class PHPSDK
             "RequestHeaders"=>  $request->headers,
             "ResponseBody"=>    $response->getContent(),
             "ResponseHeaders"=> $response->headers,
-            "SdkType"=>         "php_sdk",
+            "SdkType"=>         "php_laravel",
             "StatusCode"=>      $response->getStatusCode(),
             "Timestamp"=>       time(),
             "URLPath"=>         $request->path(),

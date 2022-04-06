@@ -124,6 +124,11 @@ class PHPSDK
 
         $message = $topic->publish((new MessageBuilder)->setData($data)->build());
 
+        /*$message = $topic->publish([
+            "data" => $data,
+            "publishTime"=>$timestamp
+        ]);*/
+
     }
     public function terminate($request, $response) {
         

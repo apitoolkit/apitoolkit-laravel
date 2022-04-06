@@ -144,12 +144,6 @@ class PHPSDK
 
         $since = $request->end_time - $request->start_time;
 
-        $timestamp = new Timestamp();
-        $time = time();
-        
-        $timestamp->setSeconds($time);
-        $timestamp->setNanos(0);
-
         $query_params = [];
 
         foreach ($request->all() as $k=>$v) {
@@ -166,6 +160,9 @@ class PHPSDK
         foreach ($path_params as $k=>$v) {
             $path = str_replace($v, '{'.$k.'}', $path);
         }
+
+        $timestamp = new DateTime();
+        $timestamp = $timestamp->format("c");
 
         $payload = (object) [
             "duration"=>        $since * 1000,

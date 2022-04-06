@@ -147,7 +147,7 @@ class PHPSDK
         $payload = (object) [
             "Duration"=>        $since,
             "Host"=>            $request->getHttpHost(),
-            "Method"=>          $request->method,
+            "Method"=>          strtoupper($request->method()),
             "ProjectID"=>       $this->projectId,
             "ProtoMajor"=>      1,
             "ProtoMinor"=>      1,

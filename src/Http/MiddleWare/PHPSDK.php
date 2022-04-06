@@ -122,7 +122,9 @@ class PHPSDK
         $timestamp = new DateTime();
         $timestamp = $timestamp->format("c");
 
-        $message = $topic->publish((new MessageBuilder)->setData($data)->build());
+        $message = $topic->publish(
+            (new MessageBuilder)->setData($data)->build()
+        );
 
         /*$message = $topic->publish([
             "data" => $data,
@@ -184,8 +186,6 @@ class PHPSDK
             "timestamp"=>       $timestamp,
             "url_path"=>        $path,
         ];
-        
-        echo json_encode($payload, JSON_UNESCAPED_SLASHES);
 
         $this->publishMessage($payload, $request);
         

@@ -52,7 +52,7 @@ class PHPSDK
         
         $clientmetadata = $this->getCredentials();
 
-        if ($lientmetadata["APIKey"] == null) {
+        if ($clientmetadata["APIKey"] == null) {
             return new APIKeyInvalid("You haven't provided a key. Please specify a valid key 'APIToolKit_API_KEY' in your .env file");
         }
         if ($clientmetadata["RootURL"] == null) {

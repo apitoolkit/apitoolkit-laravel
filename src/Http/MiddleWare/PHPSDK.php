@@ -95,7 +95,7 @@ class PHPSDK
             return new TopicInvalid("Topic is not initialized!");
         }
         $data = json_encode($payload);
-        $msg = $topic->publish([
+        $msg = $this->client->phpReqsTopic->publish([
             "data" => $data,
             "publishTime"=>time()
         ]);

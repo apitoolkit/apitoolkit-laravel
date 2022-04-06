@@ -84,10 +84,8 @@ class PHPSDK
         $topic = $client->topic(env('APIToolKit_TOPIC_ID', "apitoolkit-php-client"));
 
         $client_ = (object) [
-            "pubsubClient"=>$client,
-		    "phpReqsTopic"=>$topic,
-		    "config"=>$config,
-		    "metadata"=>(object) $clientmetadata
+		    "topic"=>$topic,
+            "id"=>$clientmetadata["pubsub_project_id"]
         ];
 
         $this->pubSub = $client_;
@@ -96,7 +94,7 @@ class PHPSDK
 
     }
     public function publishMessage($payload) {
-        if ($this->pubSub->phpReqsTopic == null) {
+        if ($this->pubSub->topic == null) {
             return new TopicInvalid("Topic is not initialized!");
         }
         $data = json_encode($payload);
@@ -104,7 +102,7 @@ class PHPSDK
         $timestamp = new Timestamp();
         $timestamp->setSeconds($time);
         $timestamp->setNanos(0);
-        $msg = $this->pubSub->phpReqsTopic->publish([
+        $msg = $this->pubSub->topic->publish([
             "data" => $data,
             "publishTime"=>$timestamp
         ]);
@@ -127,7 +125,7 @@ class PHPSDK
             "Duration"=>        $since,
             "Host"=>            $request->getHttpHost(),
             "Method"=>          $request->method,
-            "ProjectID"=>       $this->pubSub->metadata->pubsub_project_id,
+            "ProjectID"=>       $this->pubSub->id,
             "ProtoMajor"=>      1,
             "ProtoMinor"=>      1,
             "QueryParams"=>     $request->all(),

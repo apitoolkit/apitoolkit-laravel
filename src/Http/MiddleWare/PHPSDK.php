@@ -152,7 +152,7 @@ class PHPSDK
             "RequestHeaders"=>  $request->headers,
             "ResponseBody"=>    $response->getContent(),
             "ResponseHeaders"=> $response->headers,
-            "SdkType"=>         "apitoolkit-php-sdk",
+            "SdkType"=>         "go_bin",
             "StatusCode"=>      $response->getStatusCode(),
             "Timestamp"=>       time(),
             "URLPath"=>         $request->path(),

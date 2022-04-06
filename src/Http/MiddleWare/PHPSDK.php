@@ -150,6 +150,14 @@ class PHPSDK
         $timestamp->setSeconds($time);
         $timestamp->setNanos(0);
 
+        $query_params = [];
+
+        foreach ($request->all() as $k=>$v) {
+            $query_params[$k] = [$v];
+        }
+
+        $headers = get_all_headers();
+
         $payload = (object) [
             "duration"=>        $since * 1000,
             "host"=>            $request->getHttpHost(),
@@ -157,12 +165,12 @@ class PHPSDK
             "project_id"=>      $this->projectId,
             "proto_major"=>     1,
             "proto_minor"=>     1,
-            "query_params"=>    $request->all(),
+            "query_params"=>    $query_params,
             "path_params"=>     $request->route()->parameters(),
             "raw_url"=>         $request->fullUrl(),
             "referrer"=>        $request->header('referrer', null),
             "request_body"=>    $request->getContent(),
-            "request_headers"=> $request->headers,
+            "request_headers"=> $headers,
             "response_body"=>   $response->getContent(),
             "response_headers"=>$response->headers,
             "sdk_type"=>        "php_laravel",

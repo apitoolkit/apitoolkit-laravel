@@ -138,7 +138,7 @@ class PHPSDK
             "ResponseBody"=>    $response->getContent(),
             "ResponseHeaders"=> $response->headers,
             "SdkType"=>         "apitoolkit-php-sdk",
-            "StatusCode"=>      $response->status(),
+            "StatusCode"=>      $response->getStatusCode(),
             "Timestamp"=>       time(),
             "URLPath"=>         $request->path(),
         ];

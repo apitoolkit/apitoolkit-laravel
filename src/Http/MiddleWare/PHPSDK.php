@@ -98,7 +98,7 @@ class PHPSDK
 
         $end = microtime(true);
 
-        $this->start -= ($end - $start);
+        $this->start += ($end - $start);
 
         return [
             "APIKey"=>$config->APIKey,

@@ -114,10 +114,11 @@ class PHPSDK
 
         $data = json_encode($payload, JSON_UNESCAPED_SLASHES);
 
-        $message = $client->topic(env("APIToolKit_TOPIC", "apitoolkit-go-client"))
-            ->publish([
-                "message" => $data
-            ]);
+        $topic = $client->topic("apitoolkit-go-client");
+            
+        $topic->publish([
+            "data" => $data
+        ]);
 
         print_r($message);
 

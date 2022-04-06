@@ -107,7 +107,7 @@ class PHPSDK
 
         $credentials = $this->getCredentials($request);
 
-        $projectId = $credentials["projectId"];
+        $projectId = $credentials["client"]["pubsub_project_id"];
 
         $client = new PubSubClient([
             "projectId"=>$projectId,
@@ -186,9 +186,7 @@ class PHPSDK
             "timestamp"=>       $timestamp,
             "url_path"=>        $path,
         ];
-
-        echo json_encode($payload, JSON_UNESCAPED_SLASHES);
-
+        
         $this->publishMessage($payload, $request);
         
     }

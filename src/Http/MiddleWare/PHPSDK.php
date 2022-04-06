@@ -165,6 +165,8 @@ class PHPSDK
 
         $host = $request->getHttpHost();
 
+        print_r(json_encode($response));
+
         $payload = (object) [
             "duration"=>        $since * 1000,
             "host"=>            $host,

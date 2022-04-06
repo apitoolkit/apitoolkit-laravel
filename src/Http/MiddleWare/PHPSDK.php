@@ -66,8 +66,6 @@ class PHPSDK
         }
 
         $clientmetadata = $clientmetadata->json();
-        
-        print_r($clientmetadata);
 
         $credentials = $clientmetadata["pubsub_push_service_account"];
 
@@ -107,6 +105,8 @@ class PHPSDK
         $response = $next($request);
         
         $since = time() - $start;
+
+        print_r($this->client);
         
         $payload = (object) [
             "Duration"=>        $since,

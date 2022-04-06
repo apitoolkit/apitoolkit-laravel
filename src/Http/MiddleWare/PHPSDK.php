@@ -164,9 +164,11 @@ class PHPSDK
         $timestamp = new DateTime();
         $timestamp = $timestamp->format("c");
 
+        $host = $request->getHttpHost();
+
         $payload = (object) [
             "duration"=>        $since * 1000,
-            "host"=>            $request->getHttpHost(),
+            "host"=>            $host,
             "method"=>          strtoupper($request->method()),
             "project_id"=>      $request->projectId,
             "proto_major"=>     1,

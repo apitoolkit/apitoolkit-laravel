@@ -43,7 +43,7 @@ class PHPSDK
 
     public $start;
 
-    public $client_;
+    public $pubSub;
 
     public function handle($request, Closure $next)
     {
@@ -90,14 +90,14 @@ class PHPSDK
 		    "metadata"=>(object) $clientmetadata
         ];
 
-        $this->client_ = $client_;
+        $this->pubSub = $client_;
         $this->start = time();
 
         return $next($request);
 
     }
     public function publishMessage($payload) {
-        if ($this->client_->phpReqsTopic == null) {
+        if ($this->pubSub->phpReqsTopic == null) {
             return new TopicInvalid("Topic is not initialized!");
         }
         $data = json_encode($payload);
@@ -105,7 +105,7 @@ class PHPSDK
         $timestamp = new Timestamp();
         $timestamp->setSeconds($time);
         $timestamp->setNanos(0);
-        $msg = $this->client_->phpReqsTopic->publish([
+        $msg = $this->pubSub->phpReqsTopic->publish([
             "data" => $data,
             "publishTime"=>$timestamp
         ]);
@@ -128,7 +128,7 @@ class PHPSDK
             "Duration"=>        $since,
             "Host"=>            $request->getHttpHost(),
             "Method"=>          $request->method,
-            "ProjectID"=>       $this->client_->metadata->pubsub_project_id,
+            "ProjectID"=>       $this->pubSub->metadata->pubsub_project_id,
             "ProtoMajor"=>      1,
             "ProtoMinor"=>      1,
             "QueryParams"=>     $request->all(),

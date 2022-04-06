@@ -45,10 +45,6 @@ class PHPSDK
 
     public $projectId;
 
-    public $APIKey;
-
-    public $url;
-
     public function handle($request, Closure $next)
     {
         $config = (object) [
@@ -66,12 +62,6 @@ class PHPSDK
         }
 
         $url = preg_replace("/\/{1}$/", "", $url);
-        
-        $APIKey = $config->APIKey;
-
-        $this->APIKey = $APIKey;
-
-        $this->url = $url;
 
         $clientmetadata = $this->getCredentials();
 
@@ -86,8 +76,19 @@ class PHPSDK
     }
     public function getCredentials() {
 
-        $clientmetadata = Http::withoutVerifying()->withToken($this->APIKey)
-            ->get($this->url."/api/client_metadata");
+        $config = (object) [
+            "APIKey"=>env('APIToolKit_API_KEY', null),
+            "RootURL"=>env('APIToolKit_ROOT_URL', null)
+        ];
+        if ($config->RootURL == null) {
+            $url = "https://app.apitoolkit.io";
+        }
+        else {
+            $url = $config->RootURL;
+        }
+
+        $clientmetadata = Http::withoutVerifying()->withToken($config->APIKey)
+            ->get($url."/api/client_metadata");
         
         if ($clientmetadata->failed()) {
             return new ClientMetaDataError("Unable to query APIToolkit for client metadata");

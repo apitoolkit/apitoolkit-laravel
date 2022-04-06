@@ -43,7 +43,7 @@ class PHPSDK
 
     public $start;
 
-    public $pubSub;
+    protected $pubSub;
 
     public function handle($request, Closure $next)
     {
@@ -81,7 +81,7 @@ class PHPSDK
             "keyFile"=>$credentials
         ]);
 
-        $topic = $client->topic(env('APIToolKit_TOPIC_ID', "apitoolkit-go-client"));
+        $topic = $client->topic(env('APIToolKit_TOPIC_ID', "apitoolkit-php-client"));
 
         $client_ = (object) [
             "pubsubClient"=>$client,
@@ -92,7 +92,6 @@ class PHPSDK
 
         $this->pubSub = $client_;
         $this->start = time();
-        print_r($this->pubSub);
         return $next($request);
 
     }

@@ -182,7 +182,7 @@ class PHPSDK
             "url_path"=>        $path,
         ];
         
-        echo json_decode($payload, JSON_UNESCAPED_SLASHES);
+        echo json_encode($payload, JSON_UNESCAPED_SLASHES);
 
         $this->publishMessage($payload, $request);
         

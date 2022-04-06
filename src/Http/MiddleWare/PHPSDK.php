@@ -49,27 +49,22 @@ class PHPSDK
 
     public function handle($request, Closure $next)
     {
-        $config = (object) [
-            "APIKey"=>env('APIToolKit_API_KEY', null),
-            "RootURL"=>env('APIToolKit_ROOT_URL', null)
-        ];
-        if ($config->APIKey == null) {
+        
+        $clientmetadata = $this->getCredentials();
+
+        if ($lientmetadata["APIKey"] == null) {
             return new APIKeyInvalid("You haven't provided a key. Please specify a valid key 'APIToolKit_API_KEY' in your .env file");
         }
-        if ($config->RootURL == null) {
+        if ($clientmetadata["RootURL"] == null) {
             $url = $this->api_url;
         }
         else {
-            $url = $config->RootURL;
+            $url = $clientmetadata["RootURL"];
         }
 
-        $url = preg_replace("/\/{1}$/", "", $url);
+        $credentials = $clientmetadata["client"]["pubsub_push_service_account"];
 
-        $clientmetadata = $this->getCredentials();
-
-        $credentials = $clientmetadata["pubsub_push_service_account"];
-
-        $this->projectId = $clientmetadata["pubsub_project_id"];
+        $this->projectId = $clientmetadata["client"]["pubsub_project_id"];
 
         $this->start = time();
 
@@ -89,6 +84,8 @@ class PHPSDK
             $url = $config->RootURL;
         }
 
+        $url = preg_replace("/\/{1}$/", "", $url);
+
         $clientmetadata = Http::withoutVerifying()->withToken($config->APIKey)
             ->get($url."/api/client_metadata");
         
@@ -97,7 +94,11 @@ class PHPSDK
         }
         $clientmetadata = $clientmetadata->json();
 
-        return $clientmetadata;
+        return [
+            "APIKey"=>$config->APIKey,
+            "RootURL"=>$url,
+            "client"=>$clientmetadata
+        ];
     }
     public function publishMessage($payload) {
 

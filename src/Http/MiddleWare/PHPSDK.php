@@ -40,6 +40,8 @@ class ClientMetaDataError extends Exception {
 
 class PHPSDK
 {
+    public $start;
+    
     public function handle($request, Closure $next)
     {
         $config = (object) [

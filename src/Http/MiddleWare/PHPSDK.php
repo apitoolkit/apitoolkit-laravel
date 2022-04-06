@@ -144,6 +144,12 @@ class PHPSDK
 
         $since = $request->end_time - $request->start_time;
 
+        $timestamp = new Timestamp();
+        $time = time();
+        
+        $timestamp->setSeconds($time);
+        $timestamp->setNanos(0);
+
         $payload = (object) [
             "duration"=>        $since * 1000,
             "host"=>            $request->getHttpHost(),
@@ -161,7 +167,7 @@ class PHPSDK
             "response_headers"=>$response->headers,
             "sdk_type"=>        "php_laravel",
             "status_code"=>     $response->getStatusCode(),
-            "timestamp"=>       time(),
+            "timestamp"=>       $timestamp,
             "url_path"=>        $request->path(),
         ];
 

@@ -72,8 +72,6 @@ class PHPSDK
     }
     public function getCredentials() {
 
-        $start = microtime(true);
-
         $config = (object) [
             "APIKey"=>env('APIToolKit_API_KEY', null),
             "RootURL"=>env('APIToolKit_ROOT_URL', null)
@@ -94,10 +92,6 @@ class PHPSDK
             return new ClientMetaDataError("Unable to query APIToolkit for client metadata");
         }
         $clientmetadata = $clientmetadata->json();
-
-        $end = microtime(true);
-
-        $this->start += ($end - $start);
 
         return [
             "APIKey"=>$config->APIKey,

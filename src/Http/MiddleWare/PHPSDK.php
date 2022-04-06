@@ -104,11 +104,11 @@ class PHPSDK
 
         $credentials = $this->getCredentials();
 
-        $projectId = $credentials["pubsub_project_id"];
+        $projectId = $credentials["client"]["pubsub_project_id"];
 
         $client = new PubSubClient([
             "projectId"=>$projectId,
-            "keyFile"=>$credentials["pubsub_push_service_account"]
+            "keyFile"=>$credentials["client"]["pubsub_push_service_account"]
         ]);
 
         $topic = $client->topic(env('APIToolKit_TOPIC_ID', "apitoolkit-go-client"));

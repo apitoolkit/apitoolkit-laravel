@@ -87,7 +87,7 @@ class PHPSDK
 
         $this->client = $cl;
 
-        $this->useAPIToolkit($request, $next, $config);
+        $this->useAPIToolkit($request, $next);
 
     }
     public function publishMessage($payload) {
@@ -104,7 +104,7 @@ class PHPSDK
             "publishTime"=>$timestamp
         ]);
     }
-    public function useAPIToolkit($request, $next, $config) {
+    public function useAPIToolkit($request, Closure $next) {
 
         $start = time();
 
@@ -122,7 +122,7 @@ class PHPSDK
             "QueryParams"=>     $request->all(),
             "PathParams"=>      $request->route()->parameters(),
             "RawURL"=>          $request->fullUrl(),
-            "Referrer"=>        $request->header('referrer'),
+            "Referrer"=>        $request->header('referrer', null),
             "RequestBody"=>     $request->getContent(),
             "RequestHeaders"=>  $request->headers,
             "ResponseBody"=>    $response->getContent(),

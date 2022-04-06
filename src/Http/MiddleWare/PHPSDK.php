@@ -120,8 +120,7 @@ class PHPSDK
         $timestamp = $timestamp->format("c");
 
         $message = $topic->publish([
-            "data" => $data,
-            "publishTime"=>$timestamp
+            "data" => $data
         ]);
 
     }

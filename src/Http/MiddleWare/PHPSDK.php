@@ -175,7 +175,7 @@ class PHPSDK
             "proto_minor"=>     1,
             "query_params"=>    $query_params,
             "path_params"=>     $path_params,
-            "raw_url"=>         $request->fullUrl(),
+            "raw_url"=>         $request->getRequestUri(),
             "referer"=>         $request->header('referer', null),
             "request_body"=>    base64_encode($request->getContent()),
             "request_headers"=> $request_headers,

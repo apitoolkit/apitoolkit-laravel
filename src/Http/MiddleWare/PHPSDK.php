@@ -121,7 +121,7 @@ class PHPSDK
             "id"=>$projectId
         ];
 
-        $data = json_encode($payload);
+        $data = json_encode($payload, JSON_UNESCAPED_SLASHES);
 
         $timestamp = new DateTime();
         $timestamp = $timestamp->format("c");
@@ -187,8 +187,8 @@ class PHPSDK
             "url_path"=>        $path,
         ];
 
-        echo json_encode($payload);
-
+        echo json_encode($payload, JSON_UNESCAPED_SLASHES);
+        
         $this->publishMessage($payload, $request);
         
     }

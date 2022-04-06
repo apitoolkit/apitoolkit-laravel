@@ -108,10 +108,7 @@ class PHPSDK
 
         $credentials = $this->getCredentials($request);
 
-        $projectId = $credentials["client"]["pubsub_project_id"];
-
         $client = new PubSubClient([
-            "projectId"=>$projectId,
             "keyFile"=>$credentials["client"]["pubsub_push_service_account"]
         ]);
 
@@ -122,14 +119,10 @@ class PHPSDK
         $timestamp = new DateTime();
         $timestamp = $timestamp->format("c");
 
-        $message = $topic->publish(
-            (new MessageBuilder)->setData($data)->build()
-        );
-
-        /*$message = $topic->publish([
+        $message = $topic->publish([
             "data" => $data,
             "publishTime"=>$timestamp
-        ]);*/
+        ]);
 
     }
     public function terminate($request, $response) {

@@ -159,6 +159,14 @@ class PHPSDK
         $request_headers = $request->headers;
         $response_headers = $response->headers;
 
+        $path_params = $request->route()->parameters();
+
+        $path = "/".$request->path();
+
+        foreach ($path_params as $k=>$v) {
+            $path = str_replace($v, '{'.$k.'}', $path);
+        }
+
         $payload = (object) [
             "duration"=>        $since * 1000,
             "host"=>            $request->getHttpHost(),
@@ -167,7 +175,7 @@ class PHPSDK
             "proto_major"=>     1,
             "proto_minor"=>     1,
             "query_params"=>    $query_params,
-            "path_params"=>     $request->route()->parameters(),
+            "path_params"=>     $path_params,
             "raw_url"=>         $request->fullUrl(),
             "referrer"=>        $request->header('referrer', null),
             "request_body"=>    base64_encode($request->getContent()),
@@ -177,7 +185,7 @@ class PHPSDK
             "sdk_type"=>        "php_laravel",
             "status_code"=>     $response->getStatusCode(),
             "timestamp"=>       $timestamp,
-            "url_path"=>        $request->path(),
+            "url_path"=>        $path,
         ];
 
         echo json_encode($payload);

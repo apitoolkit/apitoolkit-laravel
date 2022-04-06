@@ -126,8 +126,6 @@ class PHPSDK
             "publishTime"=>$timestamp
         ]);
 
-        print_r($message);
-
     }
     public function terminate($request, $response) {
         
@@ -184,6 +182,8 @@ class PHPSDK
             "url_path"=>        $path,
         ];
         
+        echo json_decode($payload, JSON_UNESCAPED_SLASHES);
+
         $this->publishMessage($payload, $request);
         
     }

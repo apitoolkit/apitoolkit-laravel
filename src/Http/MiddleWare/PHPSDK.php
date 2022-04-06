@@ -66,14 +66,14 @@ class PHPSDK
 
         $this->projectId = $clientmetadata["client"]["pubsub_project_id"];
 
-        $this->start = microtime();
+        $this->start = microtime(true);
 
         return $next($request);
 
     }
     public function getCredentials() {
 
-        $start = microtime();
+        $start = microtime(true);
 
         $config = (object) [
             "APIKey"=>env('APIToolKit_API_KEY', null),
@@ -96,7 +96,7 @@ class PHPSDK
         }
         $clientmetadata = $clientmetadata->json();
 
-        $end = microtime();
+        $end = microtime(true);
 
         $this->start -= ($end - $start);
 
@@ -136,7 +136,7 @@ class PHPSDK
     }
     public function terminate($request, $response) {
         
-        $this->end = microtime();
+        $this->end = microtime(true);
 
         $this->log($request, $response);
         

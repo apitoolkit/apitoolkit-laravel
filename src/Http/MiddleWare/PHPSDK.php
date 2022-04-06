@@ -47,6 +47,8 @@ class PHPSDK
 
     public $APIKey;
 
+    public $url;
+
     public function handle($request, Closure $next)
     {
         $config = (object) [

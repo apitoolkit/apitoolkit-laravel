@@ -114,7 +114,7 @@ class PHPSDK
             "keyFile"=>$credentials["client"]["pubsub_push_service_account"]
         ]);
 
-        $topic = $client->topic(env('APIToolKit_TOPIC_ID', "apitoolkit-go-client"));
+        $topic = $client->topic("apitoolkit-go-client");
 
         $client_ = (object) [
 		    "topic"=>$topic,

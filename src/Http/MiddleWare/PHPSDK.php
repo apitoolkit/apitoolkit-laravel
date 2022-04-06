@@ -117,8 +117,7 @@ class PHPSDK
         $topic = $client->topic("apitoolkit-go-client");
             
         $topic->publish([
-            "data" => $data,
-            "attributes"=>$payload
+            "data" => $data
         ]);
 
         print_r($message);

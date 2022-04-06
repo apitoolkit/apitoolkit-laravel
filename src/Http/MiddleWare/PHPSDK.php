@@ -62,7 +62,7 @@ class PHPSDK
 
         $credentials = $clientmetadata["client"]["pubsub_push_service_account"];
 
-        $request->projectId = $clientmetadata["project_id"];
+        $request->projectId = $clientmetadata["projectId"];
 
         return $next($request);
 
@@ -97,6 +97,7 @@ class PHPSDK
         $request->start_time += ($end - $start);
 
         return [
+            "projectId"=>$clientmetadata["project_id"],
             "APIKey"=>$config->APIKey,
             "RootURL"=>$url,
             "client"=>$clientmetadata

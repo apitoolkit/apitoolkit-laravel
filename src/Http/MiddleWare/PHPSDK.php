@@ -120,7 +120,7 @@ class PHPSDK
             "RequestBody"=>     $request->getContent(),
             "RequestHeaders"=>  $request->header(),
             "ResponseBody"=>    $response->getContent(),
-            "ResponseHeaders"=> $response->header(),
+            "ResponseHeaders"=> $response->headers->get(),
             "SdkType"=>         "apitoolkit-php-sdk",
             "StatusCode"=>      $response->status(),
             "Timestamp"=>       time(),

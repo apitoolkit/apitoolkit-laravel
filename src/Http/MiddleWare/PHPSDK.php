@@ -45,6 +45,8 @@ class PHPSDK
 
     public $projectId;
 
+    public $api_url = "https://app.apitoolkit.io";
+
     public function handle($request, Closure $next)
     {
         $config = (object) [
@@ -55,7 +57,7 @@ class PHPSDK
             return new APIKeyInvalid("You haven't provided a key. Please specify a valid key 'APIToolKit_API_KEY' in your .env file");
         }
         if ($config->RootURL == null) {
-            $url = "https://app.apitoolkit.io";
+            $url = $this->api_url;
         }
         else {
             $url = $config->RootURL;
@@ -81,7 +83,7 @@ class PHPSDK
             "RootURL"=>env('APIToolKit_ROOT_URL', null)
         ];
         if ($config->RootURL == null) {
-            $url = "https://app.apitoolkit.io";
+            $url = $this->api_url;
         }
         else {
             $url = $config->RootURL;

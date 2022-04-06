@@ -156,7 +156,7 @@ class PHPSDK
             $query_params[$k] = [$v];
         }
 
-        $request_headers = $request->headers;
+        $request_headers = $request->header();
         $response_headers = $response->headers;
 
         $path_params = $request->route()->parameters();

@@ -114,6 +114,8 @@ class PHPSDK
         $this->end = time();
 
         $this->log($request, $response);
+
+        print_r($this);
         
     }
 

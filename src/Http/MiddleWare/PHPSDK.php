@@ -106,6 +106,8 @@ class PHPSDK
         
         $since = time() - $start;
         
+        print_r($response);
+
         $payload = (object) [
             "Duration"=>        $since,
             "Host"=>            $request->getHttpHost(),
@@ -120,7 +122,7 @@ class PHPSDK
             "RequestBody"=>     $request->getContent(),
             "RequestHeaders"=>  $request->header(),
             "ResponseBody"=>    $response->getContent(),
-            "ResponseHeaders"=> $response->headers->get(),
+            "ResponseHeaders"=> $response->headers(),
             "SdkType"=>         "apitoolkit-php-sdk",
             "StatusCode"=>      $response->status(),
             "Timestamp"=>       time(),

@@ -156,7 +156,8 @@ class PHPSDK
             $query_params[$k] = [$v];
         }
 
-        $headers = get_all_headers();
+        $request_headers = $request->headers;
+        $response_headers = $response->headers;
 
         $payload = (object) [
             "duration"=>        $since * 1000,
@@ -170,9 +171,9 @@ class PHPSDK
             "raw_url"=>         $request->fullUrl(),
             "referrer"=>        $request->header('referrer', null),
             "request_body"=>    $request->getContent(),
-            "request_headers"=> $headers,
+            "request_headers"=> $request_headers,
             "response_body"=>   $response->getContent(),
-            "response_headers"=>$response->headers,
+            "response_headers"=>$response_headers,
             "sdk_type"=>        "php_laravel",
             "status_code"=>     $response->getStatusCode(),
             "timestamp"=>       $timestamp,

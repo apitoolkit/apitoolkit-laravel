@@ -116,17 +116,12 @@ class PHPSDK
 
         $topic = $client->topic("apitoolkit-go-client");
 
-        $client_ = (object) [
-		    "topic"=>$topic,
-            "id"=>$projectId
-        ];
-
         $data = json_encode($payload, JSON_UNESCAPED_SLASHES);
 
         $timestamp = new DateTime();
         $timestamp = $timestamp->format("c");
 
-        $msg = $client_->topic->publish([
+        $topic->publish([
             "data" => $data,
             "publishTime"=>$timestamp
         ]);

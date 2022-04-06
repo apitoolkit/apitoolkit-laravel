@@ -120,14 +120,17 @@ class PHPSDK
         ];
 
         $data = json_encode($payload);
+
         $time = time();
         $timestamp = new Timestamp();
         $timestamp->setSeconds($time);
         $timestamp->setNanos(0);
+
         $msg = $client_->topic->publish([
             "data" => $data,
             "publishTime"=>$timestamp
         ]);
+
     }
     public function terminate($request, $response) {
         
@@ -163,5 +166,6 @@ class PHPSDK
         ];
 
         $this->publishMessage($payload, $request);
+        
     }
 }

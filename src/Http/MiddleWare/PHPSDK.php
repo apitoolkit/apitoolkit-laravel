@@ -121,10 +121,8 @@ class PHPSDK
 
         $data = json_encode($payload);
 
-        $time = time();
-        $timestamp = new Timestamp();
-        $timestamp->setSeconds($time);
-        $timestamp->setNanos(0);
+        $timestamp = new DateTime();
+        $timestamp = $timestamp->format("c");
 
         $msg = $client_->topic->publish([
             "data" => $data,

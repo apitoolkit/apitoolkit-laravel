@@ -61,7 +61,7 @@ class PHPSDK
 
         $credentials = $clientmetadata["client"]["pubsub_push_service_account"];
 
-        $this->projectId = $clientmetadata["client"]["pubsub_project_id"];
+        $request->projectId = $clientmetadata["client"]["pubsub_project_id"];
 
         return $next($request);
 
@@ -162,7 +162,7 @@ class PHPSDK
             "duration"=>        $since * 1000,
             "host"=>            $request->getHttpHost(),
             "method"=>          strtoupper($request->method()),
-            "project_id"=>      $this->projectId,
+            "project_id"=>      $request->projectId,
             "proto_major"=>     1,
             "proto_minor"=>     1,
             "query_params"=>    $query_params,

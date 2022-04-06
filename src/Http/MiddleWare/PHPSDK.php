@@ -43,9 +43,9 @@ class PHPSDK
 
     public $start;
 
-    public $projectId;
+    public $end;
 
-    public $api_url = "https://app.apitoolkit.io";
+    public $projectId;
 
     public function handle($request, Closure $next)
     {
@@ -79,7 +79,7 @@ class PHPSDK
             "RootURL"=>env('APIToolKit_ROOT_URL', null)
         ];
         if ($config->RootURL == null) {
-            $url = $this->api_url;
+            $url = "https://app.apitoolkit.io";
         }
         else {
             $url = $config->RootURL;
@@ -145,9 +145,9 @@ class PHPSDK
 
         $since = $this->end - $this->start;
         
-        print_r($this->end);
-
         print_r($this->start);
+
+        print_r($this->end);
 
         $payload = (object) [
             "Duration"=>        $since,

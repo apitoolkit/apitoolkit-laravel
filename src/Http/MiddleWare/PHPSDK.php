@@ -43,7 +43,7 @@ class PHPSDK
 
     public $start;
 
-    protected $pubSub;
+    public $client;
 
     public function handle($request, Closure $next)
     {
@@ -76,8 +76,27 @@ class PHPSDK
 
         $credentials = $clientmetadata["pubsub_push_service_account"];
 
+        $credentials["projectId"] = $clientmetadata["pubsub_project_id"];
+
+        $this->client = $credentials;
+
+        $this->start = time();
+
+        return $next($request);
+
+    }
+    public function publishMessage($payload) {
+
+        print_r($this->client);
+
+        $projectId = $this->client["projectId"];
+
+        unser($this->client["projectId"]);
+
+        $credentials = $this->client;
+
         $client = new PubSubClient([
-            "projectId"=>$clientmetadata["pubsub_project_id"],
+            "projectId"=>$projectId,
             "keyFile"=>$credentials
         ]);
 
@@ -85,24 +104,15 @@ class PHPSDK
 
         $client_ = (object) [
 		    "topic"=>$topic,
-            "id"=>$clientmetadata["pubsub_project_id"]
+            "id"=>$projectId
         ];
 
-        $this->pubSub = $client_;
-        $this->start = time();
-        return $next($request);
-
-    }
-    public function publishMessage($payload) {
-        if ($this->pubSub->topic == null) {
-            return new TopicInvalid("Topic is not initialized!");
-        }
         $data = json_encode($payload);
         $time = time();
         $timestamp = new Timestamp();
         $timestamp->setSeconds($time);
         $timestamp->setNanos(0);
-        $msg = $this->pubSub->topic->publish([
+        $msg = $client_->topic->publish([
             "data" => $data,
             "publishTime"=>$timestamp
         ]);
@@ -112,8 +122,6 @@ class PHPSDK
         $this->end = time();
 
         $this->log($request, $response);
-
-        print_r($this);
         
     }
 
@@ -125,7 +133,7 @@ class PHPSDK
             "Duration"=>        $since,
             "Host"=>            $request->getHttpHost(),
             "Method"=>          $request->method,
-            "ProjectID"=>       $this->pubSub->id,
+            "ProjectID"=>       $this->client->projectId,
             "ProtoMajor"=>      1,
             "ProtoMinor"=>      1,
             "QueryParams"=>     $request->all(),

@@ -5,6 +5,8 @@ namespace APIToolkit\SDKs;
 use Closure;
 use Illuminate\Support\Facades\Http;
 use Google\Cloud\PubSub\PubSubClient;
+use Google\Protobuf\Timestamp;
+
 use Exception;
 
 //use APIToolkit\SDKS\PHPSDK;
@@ -93,9 +95,13 @@ class PHPSDK
             return new TopicInvalid("Topic is not initialized!");
         }
         $data = json_encode($payload);
+        $time = time();
+        $timestamp = new Timestamp();
+        $timestamp->setSeconds($time);
+        $timestamp->setNanos(0);
         $msg = $this->client->phpReqsTopic->publish([
             "data" => $data,
-            "publishTime"=>time()
+            "publishTime"=>$timestamp
         ]);
     }
     public function useAPIToolkit($request, $next, $config) {
@@ -105,8 +111,6 @@ class PHPSDK
         $response = $next($request);
         
         $since = time() - $start;
-        
-        print_r($response);
 
         $payload = (object) [
             "Duration"=>        $since,

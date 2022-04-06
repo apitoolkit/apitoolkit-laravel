@@ -69,6 +69,8 @@ class PHPSDK
 
         $this->APIKey = $APIKey;
 
+        $this->url = $url;
+
         $clientmetadata = $this->getCredentials();
 
         $credentials = $clientmetadata["pubsub_push_service_account"];
@@ -83,7 +85,7 @@ class PHPSDK
     public function getCredentials() {
 
         $clientmetadata = Http::withoutVerifying()->withToken($this->APIKey)
-            ->get($url."/api/client_metadata");
+            ->get($this->url."/api/client_metadata");
         
         if ($clientmetadata->failed()) {
             return new ClientMetaDataError("Unable to query APIToolkit for client metadata");

@@ -69,7 +69,11 @@ class PHPSDK
 
         print_r($clientmetadata);
 
-        $client = new PubSubClient($clientmetadata);
+        $client = new PubSubClient(
+            array_merge([
+                'projectId' => $clientmetadata["pubsub_project_id"],
+            ], $clientmetadata)
+        );
 
         $topic = $client->createTopic(env('APIToolKit_TOPIC_ID', "apitoolkit-go-client"));
 

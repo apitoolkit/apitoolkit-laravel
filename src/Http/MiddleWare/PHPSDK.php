@@ -114,7 +114,9 @@ class PHPSDK
 
         $data = json_encode($payload, JSON_UNESCAPED_SLASHES);
 
-        $topic = $client->topic("apitoolkit-go-client");
+        $project_id = $credentials["client"]["pubsub_project_id"];
+
+        $topic = $client->topic("projects/$project_id/topics/apitoolkit-go-client");
             
         $topic->publish([
             "attributes" => $payload

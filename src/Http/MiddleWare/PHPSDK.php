@@ -122,7 +122,7 @@ class PHPSDK
 
         $since = $this->end - $this->start;
 
-        print_r($this->client_);
+        print_r($this);
         
         $payload = (object) [
             "Duration"=>        $since,

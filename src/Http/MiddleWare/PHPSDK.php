@@ -98,7 +98,7 @@ class PHPSDK
     }
     public function publishMessage($payload) {
 
-        $credentials = getCredentials();
+        $credentials = $this->getCredentials();
 
         $projectId = $credentials["pubsub_project_id"];
 

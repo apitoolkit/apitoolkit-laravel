@@ -41,15 +41,11 @@ class ClientMetaDataError extends Exception {
 class PHPSDK
 {
 
-    public $start;
-
-    public $end;
-
     public $projectId;
 
     public function handle($request, Closure $next)
     {
-        $this->start = microtime(true);
+        $request->start = microtime(true);
 
         $clientmetadata = $this->getCredentials();
 
@@ -129,7 +125,7 @@ class PHPSDK
     }
     public function terminate($request, $response) {
         
-        $this->end = microtime(true);
+        $request->end = microtime(true);
 
         $this->log($request, $response);
         
@@ -137,13 +133,13 @@ class PHPSDK
 
     public function log($request, $response) {
 
-        $since = $this->end - $this->start;
+        $since = $request->end - $request->start;
         
-        print_r($this->start);
+        print_r($request->start);
 
         print_r("<br/>");
 
-        print_r($this->end);
+        print_r($request->end);
 
         $payload = (object) [
             "Duration"=>        $since,

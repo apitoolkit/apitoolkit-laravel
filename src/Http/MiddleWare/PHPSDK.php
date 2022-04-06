@@ -147,6 +147,8 @@ class PHPSDK
         
         print_r($this->start);
 
+        print_r("<br/>");
+
         print_r($this->end);
 
         $payload = (object) [

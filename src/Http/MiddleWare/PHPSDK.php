@@ -45,7 +45,7 @@ class PHPSDK
 
     public function handle($request, Closure $next)
     {
-        $request->start = microtime(true);
+        $request->start_time = microtime(true);
 
         $clientmetadata = $this->getCredentials();
 
@@ -125,7 +125,7 @@ class PHPSDK
     }
     public function terminate($request, $response) {
         
-        $request->end = microtime(true);
+        $request->end_time = microtime(true);
 
         $this->log($request, $response);
         
@@ -133,13 +133,13 @@ class PHPSDK
 
     public function log($request, $response) {
 
-        $since = $request->end - $request->start;
+        $since = $request->end_time - $request->start_time;
         
-        print_r($request->start);
+        print_r($request->start_time);
 
         print_r("<br/>");
 
-        print_r($request->end);
+        print_r($request->end_time);
 
         $payload = (object) [
             "Duration"=>        $since,

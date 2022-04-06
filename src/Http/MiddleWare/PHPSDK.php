@@ -43,7 +43,9 @@ class PHPSDK
 
     public $start;
 
-    public $client;
+    public $projectId;
+
+    public $APIKey;
 
     public function handle($request, Closure $next)
     {
@@ -65,39 +67,40 @@ class PHPSDK
         
         $APIKey = $config->APIKey;
 
-        $clientmetadata = Http::withoutVerifying()->withToken($APIKey)
-            ->get($url."/api/client_metadata");
-        
-        if ($clientmetadata->failed()) {
-            return new ClientMetaDataError("Unable to query APIToolkit for client metadata");
-        }
+        $this->APIKey = $APIKey;
 
-        $clientmetadata = $clientmetadata->json();
+        $clientmetadata = $this->getCredentials();
 
         $credentials = $clientmetadata["pubsub_push_service_account"];
 
-        $credentials["projectId"] = $clientmetadata["pubsub_project_id"];
-
-        $this->client = $credentials;
+        $this->projectId = $clientmetadata["pubsub_project_id"];
 
         $this->start = time();
 
         return $next($request);
 
     }
+    public function getCredentials() {
+
+        $clientmetadata = Http::withoutVerifying()->withToken($this->APIKey)
+            ->get($url."/api/client_metadata");
+        
+        if ($clientmetadata->failed()) {
+            return new ClientMetaDataError("Unable to query APIToolkit for client metadata");
+        }
+        $clientmetadata = $clientmetadata->json();
+
+        return $clientmetadata;
+    }
     public function publishMessage($payload) {
 
-        print_r($this->client);
+        $credentials = getCredentials();
 
-        $projectId = $this->client["projectId"];
-
-        unser($this->client["projectId"]);
-
-        $credentials = $this->client;
+        $projectId = $credentials["pubsub_project_id"];
 
         $client = new PubSubClient([
             "projectId"=>$projectId,
-            "keyFile"=>$credentials
+            "keyFile"=>$credentials["pubsub_push_service_account"]
         ]);
 
         $topic = $client->topic(env('APIToolKit_TOPIC_ID', "apitoolkit-php-client"));
@@ -133,7 +136,7 @@ class PHPSDK
             "Duration"=>        $since,
             "Host"=>            $request->getHttpHost(),
             "Method"=>          $request->method,
-            "ProjectID"=>       $this->client->projectId,
+            "ProjectID"=>       $this->projectId,
             "ProtoMajor"=>      1,
             "ProtoMinor"=>      1,
             "QueryParams"=>     $request->all(),

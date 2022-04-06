@@ -141,6 +141,8 @@ class PHPSDK
 
         $since = $request->end_time - $request->start_time;
 
+        print_r($since);
+
         $payload = (object) [
             "Duration"=>        $since,
             "Host"=>            $request->getHttpHost(),

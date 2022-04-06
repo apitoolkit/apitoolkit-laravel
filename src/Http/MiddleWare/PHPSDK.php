@@ -102,9 +102,9 @@ class PHPSDK
     }
     public function useAPIToolkit($request, $next, $config) {
 
-        $response = $next($request);
-
         $start = time();
+
+        $response = $next($request);
         
         $since = time() - $start;
         

@@ -121,10 +121,12 @@ class PHPSDK
         $timestamp = new DateTime();
         $timestamp = $timestamp->format("c");
 
-        $topic->publish([
+        $message = $topic->publish([
             "data" => $data,
             "publishTime"=>$timestamp
         ]);
+
+        print_r($message);
 
     }
     public function terminate($request, $response) {

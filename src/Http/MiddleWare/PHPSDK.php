@@ -119,7 +119,7 @@ class PHPSDK
             "Referrer"=>        $request->header('referrer'),
             "RequestBody"=>     $request->getContent(),
             "RequestHeaders"=>  $request->header(),
-            "ResponseBody"=>    $response->getConent(),
+            "ResponseBody"=>    $response->getContent(),
             "ResponseHeaders"=> $response->header(),
             "SdkType"=>         "apitoolkit-php-sdk",
             "StatusCode"=>      $response->status(),

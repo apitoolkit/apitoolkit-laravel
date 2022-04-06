@@ -165,6 +165,8 @@ class PHPSDK
             "URLPath"=>         $request->path(),
         ];
 
+        echo json_encode($payload);
+
         $this->publishMessage($payload, $request);
         
     }

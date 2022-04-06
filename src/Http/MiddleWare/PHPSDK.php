@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Http;
 use Google\Cloud\PubSub\PubSubClient;
 use Google\Protobuf\Timestamp;
 use DateTime;
+use Google\Cloud\PubSub\MessageBuilder;
 
 use Exception;
 
@@ -121,10 +122,7 @@ class PHPSDK
         $timestamp = new DateTime();
         $timestamp = $timestamp->format("c");
 
-        $message = $topic->publish([
-            "data" => $data,
-            "publishTime"=>$timestamp
-        ]);
+        $message = $topic->publish((new MessageBuilder)->setData($data)->build());
 
     }
     public function terminate($request, $response) {

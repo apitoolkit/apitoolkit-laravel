@@ -118,11 +118,11 @@ class PHPSDK
 
         $topic = $client->topic("projects/$project_id/topics/apitoolkit-go-client");
             
-        $topic->publish([
+        $message = $topic->publish([
             "attributes" => $payload
         ]);
 
-        print_r($topic);
+        print_r($message);
 
     }
     public function terminate($request, $response) {

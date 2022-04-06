@@ -116,7 +116,7 @@ class PHPSDK
 
         $project_id = $credentials["client"]["pubsub_project_id"];
 
-        $topic = $client->topic("projects/$project_id/topics/apitoolkit-go-client");
+        $topic = $client->topic("apitoolkit-go-client");
             
         $message = $topic->publish([
             "data" => $data

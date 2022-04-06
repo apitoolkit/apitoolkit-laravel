@@ -122,7 +122,7 @@ class PHPSDK
             "attributes" => $payload
         ]);
 
-        print_r($message);
+        print_r($topic);
 
     }
     public function terminate($request, $response) {

@@ -125,7 +125,7 @@ class PHPSDK
         ];
 
         $data = json_encode($payload);
-        $time = microtime();
+        $time = time();
         $timestamp = new Timestamp();
         $timestamp->setSeconds($time);
         $timestamp->setNanos(0);

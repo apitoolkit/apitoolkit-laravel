@@ -93,6 +93,10 @@ class PHPSDK
         }
         $clientmetadata = $clientmetadata->json();
 
+        echo json_encode($clientmetadata);
+
+        $request->topic = $clientmetadata["topic_id"];
+
         $end = microtime(true);
 
         $request->start_time += ($end - $start);
@@ -116,7 +120,7 @@ class PHPSDK
 
         $project_id = $credentials["client"]["pubsub_project_id"];
 
-        $topic = $client->topic("apitoolkit-go-client");
+        $topic = $client->topic($request->topic);
             
         $message = $topic->publish([
             "data" => $data

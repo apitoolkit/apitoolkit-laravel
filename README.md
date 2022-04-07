@@ -1,5 +1,5 @@
 # apitoolkit-php-sdk
-A PHP/Laravel Wrapper for APIToolkit
+A PHP/Laravel SDK Wrapper for APIToolkit. It monitors incoming traffic, gathers the requests and sends the request to the apitoolkit servers.
 
 ## Installation and Requirements
 The APIToolkit PHP SDK can be used in a Laravel project as a MiddleWare by installing it as a composer package. Currently, you need to set a .env key in your application which will hold your APIToolkit API Key. This SDK interfaces with the APIToolkit REST API and Google PubSub for logging API information.

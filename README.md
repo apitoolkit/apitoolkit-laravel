@@ -23,7 +23,7 @@ Given a simple Laravel project with a route with a few path parameters, you can 
     use APIToolkit\SDKs\PHPSDK;
     use Illuminate\Http\Response;
 
-    Route::get('/users/{user_id}/delete', function () {
+    Route::post('/users/{user_id}/delete', function () {
        return Response::json([
           "status" => "error",
           "message" => "Access denied"

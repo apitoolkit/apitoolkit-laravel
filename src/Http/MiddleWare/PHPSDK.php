@@ -124,8 +124,6 @@ class PHPSDK
             "data" => $data
         ]);
 
-        echo json_encode($message);
-
     }
     public function terminate($request, $response) {
         

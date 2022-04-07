@@ -16,7 +16,7 @@ Once the installation is done, you can make use of the namespace as a middleware
 This example is intended for Laravel >= 5.3 and portrays a route middleware, but can be adjusted to fit your Laravel versions as you deem fit.
 
 Given a simple Laravel project with a route with a few path parameters, you can edit your /routes/web.php file for that route as thus:
-```
+```php
 <?php
 
     use Illuminate\Support\Facades\Route;

@@ -93,8 +93,6 @@ class PHPSDK
         }
         $clientmetadata = $clientmetadata->json();
 
-        echo json_encode($clientmetadata);
-
         $request->topic = $clientmetadata["topic_id"];
 
         $end = microtime(true);

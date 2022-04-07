@@ -174,7 +174,7 @@ class PHPSDK
             "request_headers"=> $request_headers,
             "response_body"=>   base64_encode($response->getContent()),
             "response_headers"=>$response_headers,
-            "sdk_type"=>        "php_laravel",
+            "sdk_type"=>        "PhpLaravel",
             "status_code"=>     $response->getStatusCode(),
             "timestamp"=>       $timestamp,
             "url_path"=>        $path,

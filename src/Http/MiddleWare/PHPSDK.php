@@ -46,7 +46,7 @@ class PHPSDK
 
     public function handle($request, Closure $next)
     {
-        $this->start_time = microtime(true);
+        $request->start_time = microtime(true);
 
         $clientmetadata = $this->getCredentials($request);
 
@@ -62,7 +62,7 @@ class PHPSDK
 
         $credentials = $clientmetadata["client"]["pubsub_push_service_account"];
 
-        $this->projectId = $clientmetadata["projectId"];
+        $request->projectId = $clientmetadata["projectId"];
 
         return $next($request);
 
@@ -90,7 +90,7 @@ class PHPSDK
         }
         $clientmetadata = $clientmetadata->json();
 
-        $this->topic = $clientmetadata["topic_id"];
+        $request->topic = $clientmetadata["topic_id"];
 
         return [
             "projectId"=>$clientmetadata["project_id"],
@@ -111,7 +111,7 @@ class PHPSDK
 
         $project_id = $credentials["client"]["pubsub_project_id"];
 
-        $topic = $client->topic($this->topic);
+        $topic = $client->topic($request->topic);
             
         $message = $topic->publish([
             "data" => $data
@@ -120,7 +120,7 @@ class PHPSDK
     }
     public function terminate($request, $response) {
         
-        $this->end_time = microtime(true);
+        $request->end_time = microtime(true);
 
         $this->log($request, $response);
         
@@ -128,7 +128,7 @@ class PHPSDK
 
     public function log($request, $response) {
 
-        $since = $this->end_time - $this->start_time;
+        $since = $request->end_time - $request->start_time;
 
         $query_params = [];
 
@@ -158,7 +158,7 @@ class PHPSDK
             "duration"=>        round($since * 1000),
             "host"=>            $host,
             "method"=>          strtoupper($request->method()),
-            "project_id"=>      $this->projectId,
+            "project_id"=>      $request->projectId,
             "proto_major"=>     1,
             "proto_minor"=>     1,
             "query_params"=>    $query_params,

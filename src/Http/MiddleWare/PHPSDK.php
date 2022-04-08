@@ -69,8 +69,6 @@ class PHPSDK
     }
     public function getCredentials($request) {
 
-        $start = microtime(true);
-
         $config = (object) [
             "APIKey"=>env('APIToolKit_API_KEY', null),
             "RootURL"=>env('APIToolKit_ROOT_URL', null)
@@ -93,10 +91,6 @@ class PHPSDK
         $clientmetadata = $clientmetadata->json();
 
         $request->topic = $clientmetadata["topic_id"];
-
-        $end = microtime(true);
-
-        $request->start_time += ($end - $start);
 
         return [
             "projectId"=>$clientmetadata["project_id"],
@@ -159,7 +153,7 @@ class PHPSDK
         $host = $request->getHttpHost();
 
         $payload = (object) [
-            "duration"=>        $since * 1000,
+            "duration"=>        round($since * 1000),
             "host"=>            $host,
             "method"=>          strtoupper($request->method()),
             "project_id"=>      $request->projectId,

@@ -6,7 +6,10 @@
 
     //Serve this on port 8000 - php artisan serve
     Route::get('/users/{user_id}/delete', function () {
-        return null;
+        return Response::json([
+            "status"=>"success",
+            "msg"=>"User Deleted"
+        ]);
     })->middleware(PHPSDK::class);
 
     //Serve this on port 8001 - php artisan serve --port 8001

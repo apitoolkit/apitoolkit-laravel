@@ -162,7 +162,7 @@ class PHPSDK
             "query_params"=>    $query_params,
             "path_params"=>     $path_params,
             "raw_url"=>         $request->getRequestUri(),
-            "referer"=>         $request->fullUri(),
+            "referer"=>         $request->headers->get("referer"),
             "request_body"=>    base64_encode($request->getContent()),
             "request_headers"=> $request_headers,
             "response_body"=>   base64_encode($response->getContent()),

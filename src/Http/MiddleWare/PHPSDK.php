@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Http;
 use Google\Cloud\PubSub\PubSubClient;
 use Google\Protobuf\Timestamp;
 use DateTime;
-use Google\Cloud\PubSub\MessageBuilder;
 
 use Exception;
 

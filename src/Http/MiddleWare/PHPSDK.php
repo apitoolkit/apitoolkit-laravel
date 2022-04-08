@@ -144,7 +144,7 @@ class PHPSDK
         $path = "/".$request->path();
 
         foreach ($path_params as $k=>$v) {
-            $path = str_replace($v, "{$k}", $path);
+            $path = str_replace($v, "{".$k."}", $path);
         }
 
         $timestamp = new DateTime();

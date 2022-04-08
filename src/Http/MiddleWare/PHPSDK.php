@@ -149,6 +149,8 @@ class PHPSDK
 
         $path = "/".$request->path();
 
+        echo json_encode($response);
+
         foreach ($path_params as $k=>$v) {
             $path = str_replace($v, '{'.$k.'}', $path);
         }

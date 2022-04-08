@@ -152,6 +152,8 @@ class PHPSDK
 
         $host = $request->getHttpHost();
 
+        $referer = $request->headers->get("referer");
+
         $payload = (object) [
             "duration"=>        round($since * 1000),
             "host"=>            $host,
@@ -162,7 +164,7 @@ class PHPSDK
             "query_params"=>    $query_params,
             "path_params"=>     $path_params,
             "raw_url"=>         $request->getRequestUri(),
-            "referer"=>         $request->headers->get("referer"),
+            "referer"=>         ($referer == null)?"":$referer,
             "request_body"=>    base64_encode($request->getContent()),
             "request_headers"=> $request_headers,
             "response_body"=>   base64_encode($response->getContent()),

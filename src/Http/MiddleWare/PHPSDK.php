@@ -129,7 +129,7 @@ class PHPSDK
             "keyFile"=>$credentials["client"]["pubsub_push_service_account"]
         ]);
 
-        $request->projectId = $clientmetadata["projectId"];
+        $request->projectId = $credentials["projectId"];
         
         $request->end_time = microtime(true);
 

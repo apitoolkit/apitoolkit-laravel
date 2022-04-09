@@ -5,6 +5,7 @@ namespace APIToolkit\SDKs;
 use Closure;
 use Illuminate\Support\Facades\Http;
 use Google\Cloud\PubSub\PubSubClient;
+use Illuminate\Support\Facades\Log;
 use Google\Protobuf\Timestamp;
 use DateTime;
 

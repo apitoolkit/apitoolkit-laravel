@@ -184,6 +184,8 @@ class PHPSDK
         ];
         
         $this->publishMessage($payload, $request);
+
+        Log::info(json_encode($payload, JSON_UNESCAPED_SLASHES));
         
     }
 }

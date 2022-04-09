@@ -47,7 +47,7 @@ class PHPSDK
 
     public function handle($request, Closure $next)
     {
-        $request->request->add(["start_time", microtime(true)]);
+        session(["start_time" => microtime(true)]);
 
         $clientmetadata = $this->getCredentials($request);
 
@@ -64,6 +64,8 @@ class PHPSDK
         $credentials = $clientmetadata["client"]["pubsub_push_service_account"];
 
         session(["projectId" => $clientmetadata["projectId"]]);
+
+        session()->save();
 
         return $next($request);
 
@@ -95,6 +97,8 @@ class PHPSDK
 
         session(["topic" => $clientmetadata["topic_id"]]);
 
+        session()->save();
+
         return [
             "projectId"=>$clientmetadata["project_id"],
             "APIKey"=>$config->APIKey,
@@ -124,6 +128,8 @@ class PHPSDK
     public function terminate($request, $response) {
         
         session(["end_time" => microtime(true)]);
+
+        session()->save();
 
         $this->log($request, $response);
         

@@ -111,7 +111,7 @@ class PHPSDK
 
         $project_id = $credentials["client"]["pubsub_project_id"];
 
-        $topic = $client->topic($request->topic);
+        $topic = $client->topic($request->input("topic"));
             
         $message = $topic->publish([
             "data" => $data
@@ -128,7 +128,7 @@ class PHPSDK
 
     public function log($request, $response) {
 
-        $since = $request->end_time - $request->start_time;
+        $since = $request->input("end_time") - $request->input("start_time");
 
         $query_params = [];
 
@@ -158,7 +158,7 @@ class PHPSDK
             "duration"=>        round($since * 1000),
             "host"=>            $host,
             "method"=>          strtoupper($request->method()),
-            "project_id"=>      $request->projectId,
+            "project_id"=>      $request->input("projectId"),
             "proto_major"=>     1,
             "proto_minor"=>     1,
             "query_params"=>    $query_params,
@@ -174,6 +174,8 @@ class PHPSDK
             "timestamp"=>       $timestamp,
             "url_path"=>        $path,
         ];
+
+        echo json_encode($payload, JSON_UNESCAPED_SLASHES);
         
         $this->publishMessage($payload, $request);
         

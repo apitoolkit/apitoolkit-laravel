@@ -91,6 +91,8 @@ class PHPSDK
         }
         $clientmetadata = $clientmetadata->json();
 
+        Log::info(json_encode($clientmetadata, JSON_UNESCAPED_SLASHES));
+
         $request->request->add(["topic", $clientmetadata["topic_id"]]);
 
         return [

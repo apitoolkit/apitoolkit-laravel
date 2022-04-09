@@ -94,8 +94,6 @@ class PHPSDK
         }
         $clientmetadata = $clientmetadata->json();
 
-        Log::info(json_encode($clientmetadata, JSON_UNESCAPED_SLASHES));
-
         session(["topic" => $clientmetadata["topic_id"]]);
 
         Session::save();

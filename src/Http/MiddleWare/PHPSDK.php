@@ -4,6 +4,7 @@ namespace APIToolkit\SDKs;
 
 use Closure;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Google\Cloud\PubSub\PubSubClient;
 use Google\Protobuf\Timestamp;
 use DateTime;
@@ -175,6 +176,7 @@ class PHPSDK
             "url_path"=>        $path,
         ];
         
+        Log::info(json_encode($payload, JSON_UNESCAPED_SLASHES));
         $this->publishMessage($payload, $request);
         
     }

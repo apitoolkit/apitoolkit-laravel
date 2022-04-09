@@ -5,14 +5,10 @@ namespace APIToolkit\SDKs;
 use Closure;
 use Illuminate\Support\Facades\Http;
 use Google\Cloud\PubSub\PubSubClient;
-use Illuminate\Support\Facades\Log;
 use Google\Protobuf\Timestamp;
 use DateTime;
-use Session;
 
 use Exception;
-
-@session_start();
 
 //use APIToolkit\SDKS\PHPSDK;
 
@@ -50,7 +46,7 @@ class PHPSDK
 
     public function handle($request, Closure $next)
     {
-        session(["start_time" => microtime(true)]);
+        $request->start_time = microtime(true);
 
         $clientmetadata = $this->getCredentials($request);
 
@@ -66,9 +62,7 @@ class PHPSDK
 
         $credentials = $clientmetadata["client"]["pubsub_push_service_account"];
 
-        session(["projectId" => $clientmetadata["projectId"]]);
-
-        Session::save();
+        $request->projectId = $clientmetadata["projectId"];
 
         return $next($request);
 
@@ -96,9 +90,7 @@ class PHPSDK
         }
         $clientmetadata = $clientmetadata->json();
 
-        session(["topic" => $clientmetadata["topic_id"]]);
-
-        Session::save();
+        $request->topic = $clientmetadata["topic_id"];
 
         return [
             "projectId"=>$clientmetadata["project_id"],
@@ -119,7 +111,7 @@ class PHPSDK
 
         $project_id = $credentials["client"]["pubsub_project_id"];
 
-        $topic = $client->topic(session("topic"));
+        $topic = $client->topic($request->topic);
             
         $message = $topic->publish([
             "data" => $data
@@ -128,9 +120,7 @@ class PHPSDK
     }
     public function terminate($request, $response) {
         
-        session(["end_time" => microtime(true)]);
-
-        Session::save();
+        $request->end_time = microtime(true);
 
         $this->log($request, $response);
         
@@ -138,7 +128,7 @@ class PHPSDK
 
     public function log($request, $response) {
 
-        $since = session("end_time") - session("start_time");
+        $since = $request->end_time - $request->start_time;
 
         $query_params = [];
 
@@ -168,7 +158,7 @@ class PHPSDK
             "duration"=>        round($since * 1000),
             "host"=>            $host,
             "method"=>          strtoupper($request->method()),
-            "project_id"=>      session("projectId"),
+            "project_id"=>      $request->projectId,
             "proto_major"=>     1,
             "proto_minor"=>     1,
             "query_params"=>    $query_params,
@@ -186,9 +176,6 @@ class PHPSDK
         ];
         
         $this->publishMessage($payload, $request);
-
-        Log::info(json_encode($payload, JSON_UNESCAPED_SLASHES));
         
     }
 }
-?>

@@ -8,6 +8,7 @@ use Google\Cloud\PubSub\PubSubClient;
 use Illuminate\Support\Facades\Log;
 use Google\Protobuf\Timestamp;
 use DateTime;
+use Session;
 
 use Exception;
 
@@ -65,7 +66,7 @@ class PHPSDK
 
         session(["projectId" => $clientmetadata["projectId"]]);
 
-        session()->save();
+        Session::save();
 
         return $next($request);
 
@@ -97,7 +98,7 @@ class PHPSDK
 
         session(["topic" => $clientmetadata["topic_id"]]);
 
-        session()->save();
+        Session::save();
 
         return [
             "projectId"=>$clientmetadata["project_id"],
@@ -129,7 +130,7 @@ class PHPSDK
         
         session(["end_time" => microtime(true)]);
 
-        session()->save();
+        Session::save();
 
         $this->log($request, $response);
         
@@ -183,8 +184,6 @@ class PHPSDK
             "timestamp"=>       $timestamp,
             "url_path"=>        $path,
         ];
-
-        Log::info(json_encode($payload, JSON_UNESCAPED_SLASHES));
         
         $this->publishMessage($payload, $request);
         

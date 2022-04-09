@@ -46,7 +46,7 @@ class PHPSDK
 
     public function handle($request, Closure $next)
     {
-        $request->attributes->add(["start_time" => microtime(true)]);
+        $request->request->add(["start_time", microtime(true)]);
 
         $clientmetadata = $this->getCredentials($request);
 
@@ -62,7 +62,7 @@ class PHPSDK
 
         $credentials = $clientmetadata["client"]["pubsub_push_service_account"];
 
-        $request->attributes->add(["projectId"=>$clientmetadata["projectId"]]);
+        $request->request->add(["projectId", $clientmetadata["projectId"]]);
 
         return $next($request);
 
@@ -90,7 +90,7 @@ class PHPSDK
         }
         $clientmetadata = $clientmetadata->json();
 
-        $request->attributes->add(["topic" => $clientmetadata["topic_id"]]);
+        $request->request->add(["topic", $clientmetadata["topic_id"]]);
 
         return [
             "projectId"=>$clientmetadata["project_id"],
@@ -120,7 +120,7 @@ class PHPSDK
     }
     public function terminate($request, $response) {
         
-        $request->attributes->add(["end_time" => microtime(true)]);
+        $request->request->add(["end_time", microtime(true)]);
 
         $this->log($request, $response);
         
@@ -175,7 +175,7 @@ class PHPSDK
             "url_path"=>        $path,
         ];
 
-        error_log(json_encode($payload, JSON_UNESCAPED_SLASHES));
+        Log::info(json_encode($payload, JSON_UNESCAPED_SLASHES));
         
         $this->publishMessage($payload, $request);
         

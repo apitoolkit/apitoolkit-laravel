@@ -120,6 +120,16 @@ class PHPSDK
 
     }
     public function terminate($request, $response) {
+
+        $request->start_time = microtime(true);
+
+        $credentials = $this->getCredentials($request);
+
+        $client = new PubSubClient([
+            "keyFile"=>$credentials["client"]["pubsub_push_service_account"]
+        ]);
+
+        $request->projectId = $clientmetadata["projectId"];
         
         $request->end_time = microtime(true);
 

@@ -7,7 +7,7 @@
     //Serve this on port 8000 - php artisan serve
     Route::post('/users/{user_id}/delete', function () {
         
-    })->middleware("apitoolkit");
+    })->middleware("apitoolkit:web");
 
     //Serve this on port 8001 - php artisan serve --port 8001
     Route::get('/delete', function () {

@@ -46,7 +46,7 @@ class PHPSDK
 
     public function handle($request, Closure $next)
     {
-        $request->start_time = microtime(true);
+        $request->merge(["start_time" => microtime(true)]);
 
         $clientmetadata = $this->getCredentials($request);
 
@@ -62,7 +62,7 @@ class PHPSDK
 
         $credentials = $clientmetadata["client"]["pubsub_push_service_account"];
 
-        $request->projectId = $clientmetadata["projectId"];
+        $request->merge(["projectId"=>$clientmetadata["projectId"]]);
 
         return $next($request);
 
@@ -90,7 +90,7 @@ class PHPSDK
         }
         $clientmetadata = $clientmetadata->json();
 
-        $request->topic = $clientmetadata["topic_id"];
+        $request->merge(["topic" => $clientmetadata["topic_id"]]);
 
         return [
             "projectId"=>$clientmetadata["project_id"],
@@ -120,7 +120,7 @@ class PHPSDK
     }
     public function terminate($request, $response) {
         
-        $request->end_time = microtime(true);
+        $request->merge(["end_time" => microtime(true)]);
 
         $this->log($request, $response);
         

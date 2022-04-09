@@ -12,6 +12,8 @@ use Session;
 
 use Exception;
 
+@session_start();
+
 //use APIToolkit\SDKS\PHPSDK;
 
 class APIKeyInvalid extends Exception {

@@ -155,6 +155,8 @@ class PHPSDK
 
         $referer = $request->headers->get("referer");
 
+        Log::info(json_encode($request, JSON_UNESCAPED_SLASHES));
+
         $payload = (object) [
             "duration"=>        round($since * 1000),
             "host"=>            $host,

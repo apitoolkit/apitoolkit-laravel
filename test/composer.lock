@@ -431,12 +431,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EdinyangaOttoho/apitoolkit-php-sdk.git",
-                "reference": "0b402b4ae1b9348f8a4a202690181ac212fb63b2"
+                "reference": "6450951eeda3ae5836965e783961d50c54298b6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EdinyangaOttoho/apitoolkit-php-sdk/zipball/0b402b4ae1b9348f8a4a202690181ac212fb63b2",
-                "reference": "0b402b4ae1b9348f8a4a202690181ac212fb63b2",
+                "url": "https://api.github.com/repos/EdinyangaOttoho/apitoolkit-php-sdk/zipball/6450951eeda3ae5836965e783961d50c54298b6e",
+                "reference": "6450951eeda3ae5836965e783961d50c54298b6e",
                 "shasum": ""
             },
             "require": {
@@ -465,7 +465,7 @@
                 "issues": "https://github.com/EdinyangaOttoho/apitoolkit-php-sdk/issues",
                 "source": "https://github.com/EdinyangaOttoho/apitoolkit-php-sdk/tree/master"
             },
-            "time": "2022-04-09T01:21:57+00:00"
+            "time": "2022-04-09T01:28:42+00:00"
         },
         {
             "name": "egulias/email-validator",

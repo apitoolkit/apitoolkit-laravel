@@ -8,7 +8,7 @@ Make sure that you have the .env key, "APIToolKit_API_KEY" as a valid APIToolkit
 ### Composer
 To install the PHP SDK, simply run the command:
 ```bash
-composer require edinyangaottoho/apitoolkit-php-sdk
+composer require apitoolkit/apitoolkit-php-sdk
 ```
 Once the installation is done, you can make use of the namespace as a middleware in routes/route groups in Laravel application which you intend to be monitored (tracked) via APIToolkit.
 

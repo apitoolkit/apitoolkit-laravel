@@ -50,6 +50,10 @@ class PHPSDK
 
         $clientmetadata = $this->getCredentials($request);
 
+        if (!isset($clientmetadata["APIKey"])) {
+            return new ClientMetaDataError("Unable to query APIToolkit for client metadata");
+        }
+
         if ($clientmetadata["APIKey"] == null) {
             return new APIKeyInvalid("You haven't provided a key. Please specify a valid key 'APIToolKit_API_KEY' in your .env file");
         }
@@ -120,6 +124,10 @@ class PHPSDK
     public function publishMessage($payload, $request) {
 
         $credentials = $this->getCredentials($request);
+
+        if (!isset($clientmetadata["APIKey"])) {
+            return new ClientMetaDataError("Unable to query APIToolkit for client metadata");
+        }
 
         $client = new PubSubClient([
             "keyFile"=>$credentials["client"]["pubsub_push_service_account"]

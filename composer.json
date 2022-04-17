@@ -1,5 +1,5 @@
 {
-    "name": "edinyangaottoho/apitoolkit-php-sdk",
+    "name": "apitoolkit/apitoolkit-php-sdk",
     "description": "A PHP/Laravel SDK Wrapper for APIToolkit. It monitors incoming traffic, gathers the requests and sends the request to the apitoolkit servers.",
     "type": "library",
     "license": "MIT",

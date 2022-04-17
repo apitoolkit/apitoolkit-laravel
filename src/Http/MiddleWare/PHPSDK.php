@@ -3,7 +3,6 @@
 namespace APIToolkit\SDKs;
 
 use Closure;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Google\Cloud\PubSub\PubSubClient;
 use Google\Protobuf\Timestamp;
@@ -68,6 +67,26 @@ class PHPSDK
         return $next($request);
 
     }
+    public function credentials($url, $api_key) {
+
+        $url = $url."/api/client_metadata";
+
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        $headers = array(
+            "Authorization: Bearer $api_key",
+        );
+
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+        $response = json_decode(curl_exec($curl), 1);
+
+        return $response;
+        
+    }
     public function getCredentials($request) {
 
         $config = (object) [
@@ -83,13 +102,11 @@ class PHPSDK
 
         $url = preg_replace("/\/{1}$/", "", $url);
 
-        $clientmetadata = Http::withoutVerifying()->withToken($config->APIKey)
-            ->get($url."/api/client_metadata");
+        $clientmetadata = $this->credentials($url, $config->APIKey);
         
-        if ($clientmetadata->failed()) {
+        if ($clientmetadata == false) {
             return new ClientMetaDataError("Unable to query APIToolkit for client metadata");
         }
-        $clientmetadata = $clientmetadata->json();
 
         $request->topic = $clientmetadata["topic_id"];
 

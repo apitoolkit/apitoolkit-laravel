@@ -4,8 +4,53 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6ef2bfae7507e3ca8fe3c1e211a452b6",
+    "content-hash": "edb769545abfc8602acdccddcbd8c66d",
     "packages": [
+        {
+            "name": "apitoolkit/apitoolkit-php-sdk",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/apitoolkit/apitoolkit-php-sdk.git",
+                "reference": "22e6f7c4a2d93a79a314e9eaab5c56d93cb6a6fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/apitoolkit/apitoolkit-php-sdk/zipball/22e6f7c4a2d93a79a314e9eaab5c56d93cb6a6fc",
+                "reference": "22e6f7c4a2d93a79a314e9eaab5c56d93cb6a6fc",
+                "shasum": ""
+            },
+            "require": {
+                "google/cloud-pubsub": "^1.35"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "APIToolkit\\SDKs\\": "src/Http/MiddleWare"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Edinyanga O. Ottoho",
+                    "email": "elzucky@gmail.com"
+                },
+                {
+                    "name": "apitoolkitio",
+                    "email": "hello@apitoolkit.io"
+                }
+            ],
+            "description": "A PHP/Laravel SDK Wrapper for APIToolkit. It monitors incoming traffic, gathers the requests and sends the request to the apitoolkit servers.",
+            "support": {
+                "issues": "https://github.com/apitoolkit/apitoolkit-php-sdk/issues",
+                "source": "https://github.com/apitoolkit/apitoolkit-php-sdk/tree/master"
+            },
+            "time": "2022-04-17T22:25:54+00:00"
+        },
         {
             "name": "asm89/stack-cors",
             "version": "v2.1.1",
@@ -8514,6 +8559,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "apitoolkit/apitoolkit-php-sdk": 20,
         "edinyangaottoho/apitoolkit-php-sdk": 20
     },
     "prefer-stable": true,

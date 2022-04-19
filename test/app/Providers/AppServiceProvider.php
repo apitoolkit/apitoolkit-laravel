@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(PHPSDK::class, function() {
             $client = new PHPSDK();
-            return $client->Client("w6NLf8Mdbi0zmtFP1qZsQzhG9DiUHNOeur/p3OlX8W8G/dPF");
+            $client->Client("w6NLf8Mdbi0zmtFP1qZsQzhG9DiUHNOeur/p3OlX8W8G/dPF");
         });
     }
 }

@@ -42,35 +42,14 @@ class ClientMetaDataError extends Exception {
 class PHPSDK
 {
 
-    public $projectId;
+    private $client;
 
-    public function handle($request, Closure $next)
-    {
-        $request->start_time = microtime(true);
+    public function Client($APIKey) {
 
-        $clientmetadata = $this->getCredentials($request);
-
-        if (!isset($clientmetadata["APIKey"])) {
-            return new ClientMetaDataError("Unable to query APIToolkit for client metadata");
-        }
-
-        if ($clientmetadata["APIKey"] == null) {
-            return new APIKeyInvalid("You haven't provided a key. Please specify a valid key 'APIToolKit_API_KEY' in your .env file");
-        }
-        if ($clientmetadata["RootURL"] == null) {
-            $url = $this->api_url;
-        }
-        else {
-            $url = $clientmetadata["RootURL"];
-        }
-
-        $credentials = $clientmetadata["client"]["pubsub_push_service_account"];
-
-        $request->projectId = $clientmetadata["projectId"];
-
-        return $next($request);
+        $this->client = $this->getCredentials($APIKey);
 
     }
+
     public function credentials($url, $api_key) {
 
         $url = $url."/api/client_metadata";
@@ -91,54 +70,43 @@ class PHPSDK
         return $response;
         
     }
-    public function getCredentials($request) {
+    public function getCredentials($APIKey) {
 
-        $config = (object) [
-            "APIKey"=>env('APIToolKit_API_KEY', null),
-            "RootURL"=>env('APIToolKit_ROOT_URL', null)
-        ];
-        if ($config->RootURL == null) {
-            $url = "https://app.apitoolkit.io";
-        }
-        else {
-            $url = $config->RootURL;
-        }
+        $url = "https://app.apitoolkit.io";
 
-        $url = preg_replace("/\/{1}$/", "", $url);
-
-        $clientmetadata = $this->credentials($url, $config->APIKey);
+        $clientmetadata = $this->credentials($url, $APIKey);
         
         if ($clientmetadata == false) {
             return new ClientMetaDataError("Unable to query APIToolkit for client metadata");
         }
 
-        $request->topic = $clientmetadata["topic_id"];
-
         return [
             "projectId"=>$clientmetadata["project_id"],
-            "APIKey"=>$config->APIKey,
+            "APIKey"=>$APIKey,
             "RootURL"=>$url,
-            "client"=>$clientmetadata
+            "client"=>$clientmetadata,
+            "topic"=>$clientmetadata["topic_id"]
         ];
+    }
+
+    public function handle($request, Closure $next)
+    {
+
+        $request->start_time = microtime(true);
+
     }
     public function publishMessage($payload, $request) {
 
-        $credentials = $this->getCredentials($request);
-
-        if (!isset($clientmetadata["APIKey"])) {
-            return new ClientMetaDataError("Unable to query APIToolkit for client metadata");
-        }
-
         $client = new PubSubClient([
-            "keyFile"=>$credentials["client"]["pubsub_push_service_account"]
+            "keyFile"=>$this->client["client"]["pubsub_push_service_account"]
         ]);
 
         $data = json_encode($payload, JSON_UNESCAPED_SLASHES);
 
-        $project_id = $credentials["client"]["pubsub_project_id"];
+        $project_id = $this->client["client"]["pubsub_project_id"];
 
-        $topic = $client->topic($request->topic);
-            
+        $topic = $client->topic($this->client["topic"]);
+        
         $message = $topic->publish([
             "data" => $data
         ]);
@@ -184,7 +152,7 @@ class PHPSDK
             "duration"=>        round($since * 1000),
             "host"=>            $host,
             "method"=>          strtoupper($request->method()),
-            "project_id"=>      $request->projectId,
+            "project_id"=>      $this->client["projectId"],
             "proto_major"=>     1,
             "proto_minor"=>     1,
             "query_params"=>    $query_params,

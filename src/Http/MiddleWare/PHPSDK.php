@@ -47,6 +47,7 @@ class PHPSDK
     public function Client($APIKey) {
 
         $this->client = $this->getCredentials($APIKey);
+        return $this->client;
 
     }
 

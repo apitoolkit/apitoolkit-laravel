@@ -94,6 +94,8 @@ class PHPSDK
 
         $request->start_time = microtime(true);
 
+        return $next($request);
+
     }
     public function publishMessage($payload, $request) {
 

@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $client = new PHPSDK();
-        $data = $client->Client("w6NLf8Mdbi0zmtFP1qZsQzhG9DiUHNOeur/p3OlX8W8G/dPF");
+        $data = $client->Client("YOUR_API_KEY_HERE");
         config(["client"=>$data]);
     }
 }

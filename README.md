@@ -5,6 +5,21 @@ A PHP/Laravel SDK Wrapper for APIToolkit. It monitors incoming traffic, gathers 
 The APIToolkit PHP SDK can be used in a Laravel project as a MiddleWare by installing it as a composer package. Currently, you need to set a .env key in your application which will hold your APIToolkit API Key. This SDK interfaces with the APIToolkit REST API and Google PubSub for logging API information.
 Make sure that you have the .env key, "APIToolKit_API_KEY" as a valid APIToolkit API key in your project.
 
+### Setting up the client upon application Boot
+To prevent the query of client metadata, you need to initialize the PHPSDK class and call the Client method in the AppServiceProvider boot method with your project API Key thus:
+
+```php
+
+//use APIToolkit\SDKs\PHPSDK;
+
+public function boot()
+{
+   $client = new PHPSDK();
+   $data = $client->Client("YOUR_API_KEY_HERE");
+   config(["client"=>$data]);
+}
+```
+
 ### Composer
 To install the PHP SDK, simply run the command:
 ```bash

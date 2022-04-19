@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/apitoolkit/apitoolkit-php-sdk.git",
-                "reference": "bb1963af2eafcab36afbf600a6effb77486bfc27"
+                "reference": "8f705799dd18f1599cb471bb8b2ad954eb91f75f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apitoolkit/apitoolkit-php-sdk/zipball/bb1963af2eafcab36afbf600a6effb77486bfc27",
-                "reference": "bb1963af2eafcab36afbf600a6effb77486bfc27",
+                "url": "https://api.github.com/repos/apitoolkit/apitoolkit-php-sdk/zipball/8f705799dd18f1599cb471bb8b2ad954eb91f75f",
+                "reference": "8f705799dd18f1599cb471bb8b2ad954eb91f75f",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +49,7 @@
                 "issues": "https://github.com/apitoolkit/apitoolkit-php-sdk/issues",
                 "source": "https://github.com/apitoolkit/apitoolkit-php-sdk/tree/master"
             },
-            "time": "2022-04-19T11:05:30+00:00"
+            "time": "2022-04-19T11:33:53+00:00"
         },
         {
             "name": "asm89/stack-cors",

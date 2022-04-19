@@ -42,12 +42,10 @@ class ClientMetaDataError extends Exception {
 class PHPSDK
 {
 
-    private $client;
-
     public function Client($APIKey) {
 
-        $this->client = $this->getCredentials($APIKey);
-        return $this->client;
+        $client = $this->getCredentials($APIKey);
+        return $client;
 
     }
 
@@ -101,14 +99,14 @@ class PHPSDK
     public function publishMessage($payload, $request) {
 
         $client = new PubSubClient([
-            "keyFile"=>$this->client["client"]["pubsub_push_service_account"]
+            "keyFile"=>config("client")["client"]["pubsub_push_service_account"]
         ]);
 
         $data = json_encode($payload, JSON_UNESCAPED_SLASHES);
 
-        $project_id = $this->client["client"]["pubsub_project_id"];
+        $project_id = config("client")["client"]["pubsub_project_id"];
 
-        $topic = $client->topic($this->client["topic"]);
+        $topic = $client->topic(config("client")["topic"]);
         
         $message = $topic->publish([
             "data" => $data
@@ -155,7 +153,7 @@ class PHPSDK
             "duration"=>        round($since * 1000),
             "host"=>            $host,
             "method"=>          strtoupper($request->method()),
-            "project_id"=>      $this->client["projectId"],
+            "project_id"=>      config("client")["projectId"],
             "proto_major"=>     1,
             "proto_minor"=>     1,
             "query_params"=>    $query_params,

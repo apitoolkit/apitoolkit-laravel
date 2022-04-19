@@ -31,12 +31,10 @@
     //Serve this on port 8001 - php artisan serve --port 8001
     //Used to delete users from /users/{user_id}/delete
     Route::get('/delete', function () {
-        /*
         $data = Http::withBody(json_encode(["mode"=>"admin"]), 'application/json')
             ->post("http://127.0.0.1:8000/users/123456/delete")->json();
 
         return Response::json($data, 200);
-        */
     });
 
     //Serve this on port 8001 - php artisan serve --port 8001

@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
     
     public function register()
     {
-        //
+        
     }
 
     /**
@@ -26,10 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->bind(PHPSDK::class, function ($app) {
-            $client = PHPSDK::Client("w6NLf8Mdbi0zmtFP1qZsQzhG9DiUHNOeur/p3OlX8W8G/dPF");
-            Log::json_encode($client);
-            return $client;
-        });
+        $client = new PHPSDK();
+        $client->Client("w6NLf8Mdbi0zmtFP1qZsQzhG9DiUHNOeur/p3OlX8W8G/dPF");
+        Log::info(json_encode($client));
     }
 }

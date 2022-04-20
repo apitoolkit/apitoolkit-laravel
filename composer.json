@@ -15,11 +15,15 @@
     ],
     "minimum-stability": "stable",
     "autoload": {
-        "psr-4": {"APIToolkit": "src"}
+        "psr-4": {
+            "APIToolkit": "src"
+        }
     },
     "require": {
         "google/cloud-pubsub": "^1.35",
-      "ext-json": "*",
+        "illuminate/support": "^5.0|^6.0|^7.0|^8.0",
+        "illuminate/http": "^5.0|^6.0|^7.0|^8.0",
+        "ext-json": "*",
         "ext-curl": "*"
     }
 }

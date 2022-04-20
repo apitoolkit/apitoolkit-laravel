@@ -10,7 +10,7 @@ To prevent the query of client metadata, you need to initialize the PHPSDK class
 
 ```php
 
-//use APIToolkit\SDKs\PHPSDK;
+//use APIToolkit\SDKs\APIToolkit;
 
 public function boot()
 {

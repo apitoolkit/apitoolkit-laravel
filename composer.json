@@ -15,9 +15,11 @@
     ],
     "minimum-stability": "stable",
     "autoload": {
-        "psr-4": {"APIToolkit\\SDKs\\": "src/Http/MiddleWare"}
+        "psr-4": {"APIToolkit": "src"}
     },
     "require": {
-        "google/cloud-pubsub": "^1.35"
+        "google/cloud-pubsub": "^1.35",
+      "ext-json": "*",
+        "ext-curl": "*"
     }
 }

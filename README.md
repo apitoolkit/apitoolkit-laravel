@@ -1,50 +1,74 @@
-# apitoolkit-php-sdk
+# APIToolKit Laravel SDK
+
 A PHP/Laravel SDK Wrapper for APIToolkit. It monitors incoming traffic, gathers the requests and sends the request to the apitoolkit servers.
 
-## Installation and Requirements
-The APIToolkit PHP SDK can be used in a Laravel project as a MiddleWare by installing it as a composer package. Currently, you need to set a .env key in your application which will hold your APIToolkit API Key. This SDK interfaces with the APIToolkit REST API and Google PubSub for logging API information.
-Make sure that you have the .env key, "APIToolKit_API_KEY" as a valid APIToolkit API key in your project.
+## Installation
 
-### Setting up the client upon application Boot
-To prevent the query of client metadata, you need to initialize the PHPSDK class and call the Client method in the AppServiceProvider boot method with your project API Key thus:
+Run the following command to install the package:
 
-```php
-
-//use APIToolkit\SDKs\APIToolkit;
-
-public function boot()
-{
-   $client = new PHPSDK();
-   $data = $client->Client("YOUR_API_KEY_HERE");
-   config(["client"=>$data]);
-}
-```
-
-### Composer
-To install the PHP SDK, simply run the command:
 ```bash
 composer require apitoolkit/apitoolkit-php-sdk
 ```
-Once the installation is done, you can make use of the namespace as a middleware in routes/route groups in Laravel application which you intend to be monitored (tracked) via APIToolkit.
 
-## Basic Usage
-This example is intended for Laravel >= 5.3 and portrays a route middleware, but can be adjusted to fit your Laravel versions as you deem fit.
+Set the `APITOOLKIT_API_KEY` environment variable to your API key in you `.env` file, should look like this:
 
-Given a simple Laravel project with a route with a few path parameters, you can edit your /routes/web.php file for that route as thus:
+```
+APITOOLKIT_API_KEY=xxxxxx-xxxxx-xxxxxx-xxxxxx-xxxxxx
+```
+
+## Usage
+
+Register the middleware in the `app/Http/Kernel.php` file under the `api` middleware group:
+
 ```php
 <?php
 
-    use Illuminate\Support\Facades\Route;
-    use APIToolkit\SDKs\PHPSDK;
-    use Illuminate\Http\Response;
+namespace App\Http;
 
-    Route::post('/users/{user_id}/delete', function () {
-       return Response::json([
-          "status" => "error",
-          "message" => "Access denied"
-       ], 403);
-    })->middleware(PHPSDK::class);
-    
-?>
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
+
+class Kernel extends HttpKernel
+{
+    ...
+    /**
+     * The application's route middleware groups.
+     *
+     * @var array
+     */
+    protected $middlewareGroups = [
+        ...
+        'api' => [
+            ...
+            \APIToolkit\Http\Middleware\APIToolkitAPIToolkit::class,
+            ...
+        ],
+    ];
+    ...
+}
 ```
-This data is sent to your APIToolkit dashboard for management.
+
+Alternatively, if you want to monitor specific routes, you can register the middleware, like this:
+
+```php
+    /**
+     * The application's route middleware.
+     *
+     * These middleware may be assigned to groups or used individually.
+     *
+     * @var array
+     */
+    protected $routeMiddleware = [
+        ...
+        'apitoolkit' => \APIToolkit\Http\Middleware\APIToolkitAPIToolkit::class,
+    ];
+```
+
+Then you can use the `apitoolkit` middleware in your routes:
+
+```php
+Route::get('/', function () {
+    return response()->json([
+        'message' => 'Welcome to your new application!'
+    ]);
+})->middleware('apitoolkit');
+```

@@ -1,6 +1,6 @@
 <?php
 
-namespace APIToolkit\Http\MiddleWare;
+namespace APIToolkit\Http\Middleware;
 
 use APIToolkit\Service\APIToolkitService;
 use Closure;

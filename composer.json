@@ -1,23 +1,33 @@
 {
-    "name": "apitoolkit/apitoolkit-php-sdk",
-    "description": "A PHP/Laravel SDK Wrapper for APIToolkit. It monitors incoming traffic, gathers the requests and sends the request to the apitoolkit servers.",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Edinyanga O. Ottoho",
-            "email": "elzucky@gmail.com"
-        },
-        {
-            "name": "apitoolkitio",
-            "email": "hello@apitoolkit.io"
-        }
-    ],
-    "minimum-stability": "stable",
-    "autoload": {
-        "psr-4": {"APIToolkit\\SDKs\\": "src/Http/MiddleWare"}
+  "name": "apitoolkit/laravel-sdk",
+  "description": "A PHP/Laravel SDK Wrapper for APIToolkit. It monitors incoming traffic, gathers the requests and sends the request to the apitoolkit servers.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Edinyanga O. Ottoho",
+      "email": "elzucky@gmail.com"
     },
-    "require": {
-        "google/cloud-pubsub": "^1.35"
+    {
+      "name": "apitoolkitio",
+      "email": "hello@apitoolkit.io"
+    },
+    {
+      "name": "Michael Trojan Okoh",
+      "email": "michael@okoh.co.uk"
     }
+  ],
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "APIToolkit\\": "src/"
+    }
+  },
+  "require": {
+    "google/cloud-pubsub": "^1.35",
+    "illuminate/support": "^5.0|^6.0|^7.0|^8.0",
+    "illuminate/http": "^5.0|^6.0|^7.0|^8.0",
+    "ext-json": "*",
+    "ext-curl": "*"
+  }
 }

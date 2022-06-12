@@ -7,7 +7,7 @@ A PHP/Laravel SDK Wrapper for APIToolkit. It monitors incoming traffic, gathers 
 Run the following command to install the package:
 
 ```bash
-composer require apitoolkit/apitoolkit-php-sdk
+composer require apitoolkit/apitoolkit-php
 ```
 
 Set the `APITOOLKIT_API_KEY` environment variable to your API key in you `.env` file, should look like this:

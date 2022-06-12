@@ -8,14 +8,16 @@ use Illuminate\Http\Request;
 
 class APIToolkit
 {
-    public function handle(Request $request, Closure $next)
-    {
-        $response = $next($request);
+  private $apitoolkit;
 
-        $apitoolkit = new APIToolkitService();
-
-        $apitoolkit->log($request, $response);
-
-        return $response;
-    }
+  public function __construct()
+  {
+    $this->apitoolkit = app(ApitoolkitService::class);
+  }
+  public function handle(Request $request, Closure $next)
+  {
+    $response = $next($request);
+    $this->apitoolkit->log($request, $response);
+    return $response;
+  }
 }

@@ -10,10 +10,11 @@ class APIToolkit
 {
   private $apitoolkit;
 
-  public function __construct()
+  public function __construct(ApitoolkitService $apitoolkit)
   {
-    $this->apitoolkit = app(ApitoolkitService::class);
+    $this->apitoolkit = $apitoolkit;
   }
+
   public function handle(Request $request, Closure $next)
   {
     $response = $next($request);

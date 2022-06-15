@@ -15,6 +15,10 @@
     {
       "name": "Michael Trojan Okoh",
       "email": "michael@okoh.co.uk"
+    },
+    {
+      "name": "Anthony Alaribe",
+      "email": "anthonyalaribe@gmail.com"
     }
   ],
   "prefer-stable": false,
@@ -27,7 +31,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "APIToolkit\\APIToolkit\\Provider\\ApitoolkitServiceProvider"
+        "APIToolkit\\Provider\\APIToolkitServiceProvider"
       ]
     }
   },

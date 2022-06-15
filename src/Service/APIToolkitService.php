@@ -19,7 +19,7 @@ class APIToolkitService
   private $projectId;
   private $pubsubTopic;
 
-  public function __construct()
+  public function __construct($rand)
   {
     $this->apiKey = env('APITOOLKIT_KEY');
     $this->rootURL = env("APITOOLKIT_ROOT_URL", "https://app.apitoolkit.io");
@@ -32,7 +32,7 @@ class APIToolkitService
       "keyFile" => $credentials["client"]["pubsub_push_service_account"]
     ]);
     $this->pubsubTopic = $pubsubClient->topic($credentials["topic"]);
-    Log::Debug("in apitoolkit service constructor");
+    Log::Debug("in apitoolkit service constructor", $rand);
   }
 
   public static function getInstance()
@@ -68,8 +68,7 @@ class APIToolkitService
   {
     $clientmetadata = $this->credentials($url, $APIKey);
     if (!$clientmetadata) {
-      // return new InvalidClientMetadataException("Unable to query APIToolkit for client metadata, do you have a correct APIKey? ");
-      return throw new InvalidClientMetadataException("Unable to query APIToolkit for client metadata, do you have a correct APIKey? ");
+      return new InvalidClientMetadataException("Unable to query APIToolkit for client metadata, do you have a correct APIKey? ");
     }
 
     return [

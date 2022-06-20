@@ -9,7 +9,7 @@ class APIToolkitServiceProvider extends ServiceProvider
 {
   public function register()
   {
-    $this->app->singleton(ApitoolkitService::class, function ($app) {
+    $this->app->singleton('apitoolkit.service', function ($app) {
       return ApitoolkitService(generateRandomString());
     });
   }

@@ -5,13 +5,12 @@ namespace APIToolkit\Service;
 use APIToolkit\Exceptions\InvalidClientMetadataException;
 use DateTime;
 use Google\Cloud\PubSub\PubSubClient;
-use Illuminate\Support\Facades\Log;
+use \Illuminate\Http\Request;
+
 
 class APIToolkitService
 {
   private static $instance;
-  private $apiKey;
-  private $rootURL;
 
   /**
    * @var InvalidClientMetadataException|array
@@ -19,32 +18,25 @@ class APIToolkitService
   private $projectId;
   private $pubsubTopic;
 
-  public function __construct($rand)
-  {
-    $this->apiKey = env('APITOOLKIT_KEY');
-    $this->rootURL = env("APITOOLKIT_ROOT_URL", "https://app.apitoolkit.io");
-    $credentials = $this->getCredentials($this->rootURL, $this->apiKey);
-
-    if (!$credentials) return;
-
+  private function __construct($credentials) {
     $this->projectId = $credentials["projectId"];
+    // TODO: Is it possible to cache this pubsub client and prevent initialization on each request?
     $pubsubClient = new PubSubClient([
-      "keyFile" => $credentials["client"]["pubsub_push_service_account"]
+      "keyFile" => $credentials["pubsubKeyFile"]
     ]);
     $this->pubsubTopic = $pubsubClient->topic($credentials["topic"]);
-    Log::Debug("in apitoolkit service constructor", $rand);
   }
 
-  public static function getInstance()
+  public static function getInstance($credentials)
   {
     if (!self::$instance) {
-      self::$instance = new self();
-      Log::error("instance func");
+      self::$instance = new self($credentials);
     }
+
     return self::$instance;
   }
 
-  public function credentials($url, $api_key)
+  public static function credentials($url, $api_key)
   {
     $url = $url . "/api/client_metadata";
 
@@ -64,18 +56,19 @@ class APIToolkitService
     return $response;
   }
 
-  public function getCredentials($url, $APIKey)
+  public static function getCredentials()
   {
-    $clientmetadata = $this->credentials($url, $APIKey);
+    $APIKey = env('APITOOLKIT_KEY');
+    $url = env("APITOOLKIT_ROOT_URL", "https://app.apitoolkit.io");
+
+    $clientmetadata = self::credentials($url, $APIKey);
     if (!$clientmetadata) {
       return new InvalidClientMetadataException("Unable to query APIToolkit for client metadata, do you have a correct APIKey? ");
     }
 
     return [
       "projectId" => $clientmetadata["project_id"],
-      "APIKey" => $APIKey,
-      "RootURL" => $url,
-      "client" => $clientmetadata,
+      "pubsubKeyFile" => $clientmetadata["pubsub_push_service_account"],
       "topic" => $clientmetadata["topic_id"]
     ];
   }
@@ -89,11 +82,11 @@ class APIToolkitService
     ]);
   }
 
-  public function log($request, $response)
+  public function log(Request $request, $response, $startTime)
   {
     if (!$this->pubsubTopic) return;
 
-    $since = microtime(true) - $request->start_time;
+    $since = hrtime(true) - $startTime;
 
     $query_params = [];
 

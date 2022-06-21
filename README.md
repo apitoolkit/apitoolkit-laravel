@@ -18,7 +18,7 @@ APITOOLKIT_API_KEY=xxxxxx-xxxxx-xxxxxx-xxxxxx-xxxxxx
 
 ## Usage
 
-Register the middleware in the `app/Http/Kernel.php` file under the `api` middleware group:
+Register the middleware in the `app/Http/Kernel.php` file under the correct middleware group eg `api`, or at the root:
 
 ```php
 <?php
@@ -72,3 +72,6 @@ Route::get('/', function () {
     ]);
 })->middleware('apitoolkit');
 ```
+
+# Requirements
+- For laravel, apitoolkit uses the cache to prevent reinitializing the sdk with each request. So make sure you have laravel cache setup for your service

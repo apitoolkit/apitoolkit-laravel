@@ -18,7 +18,8 @@ class APIToolkitService
   private $projectId;
   private $pubsubTopic;
 
-  private function __construct($credentials) {
+  private function __construct($credentials)
+  {
     $this->projectId = $credentials["projectId"];
     // TODO: Is it possible to cache this pubsub client and prevent initialization on each request?
     $pubsubClient = new PubSubClient([

@@ -9,9 +9,6 @@ class APIToolkitServiceProvider extends ServiceProvider
 {
   public function register()
   {
-    $this->app->singleton('apitoolkit.service', function ($app) {
-      return ApitoolkitService(generateRandomString());
-    });
   }
 
   public function boot()

@@ -37,14 +37,9 @@
   },
   "require": {
     "google/cloud-pubsub": "^1.35",
-    "illuminate/support": "^5.0|^6.0|^7.0|^8.0",
-    "illuminate/http": "^5.0|^6.0|^7.0|^8.0",
+    "illuminate/support": "^5.0|^6.0|^7.0|^8.0|^9.0",
+    "illuminate/http": "^5.0|^6.0|^7.0|^8.0|^9.0",
     "ext-json": "*",
     "ext-curl": "*"
-  },
-  "config": {
-    "platform": {
-      "php": "^5.0|^6.0|^7.0|^8.0"
-    }
   }
 }

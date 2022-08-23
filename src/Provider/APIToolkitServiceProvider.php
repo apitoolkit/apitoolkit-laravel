@@ -2,6 +2,7 @@
 
 namespace APIToolkit\Provider;
 
+// The service provider which seems correct
 use APIToolkit\Service\APIToolkitService;
 use Illuminate\Support\ServiceProvider;
 

@@ -53,7 +53,6 @@ class APIToolkitService
     curl_setopt($curlInit, CURLOPT_SSL_VERIFYPEER, false);
 
     $curlResponse = curl_exec($curlInit);
-    dd($curlResponse);
 
     $response = json_decode($curlResponse, 1);
     if ($curlResponse == false) {

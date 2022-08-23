@@ -41,5 +41,10 @@
     "illuminate/http": "^5.0|^6.0|^7.0|^8.0",
     "ext-json": "*",
     "ext-curl": "*"
+  },
+  "config": {
+    "platform": {
+      "php": "*"
+    }
   }
 }

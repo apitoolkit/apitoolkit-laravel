@@ -39,7 +39,7 @@ class Kernel extends HttpKernel
         ...
         'api' => [
             ...
-            \APIToolkit\Http\Middleware\APIToolkitAPIToolkit::class,
+            \APIToolkit\Http\Middleware\APIToolkit::class,
             ...
         ],
     ];
@@ -59,7 +59,7 @@ Alternatively, if you want to monitor specific routes, you can register the midd
      */
     protected $routeMiddleware = [
         ...
-        'apitoolkit' => \APIToolkit\Http\Middleware\APIToolkitAPIToolkit::class,
+        'apitoolkit' => \APIToolkit\Http\Middleware\APIToolkit::class,
     ];
 ```
 

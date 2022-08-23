@@ -52,7 +52,8 @@ class APIToolkitService
     curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
-    $response = json_decode(curl_exec($curl), 1);
+    $curlResponse = curl_exec($curl);
+    $response = json_decode($curlResponse, 1);
 
     return $response;
   }

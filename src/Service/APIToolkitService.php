@@ -41,21 +41,26 @@ class APIToolkitService
   {
     $url = $url . "/api/client_metadata";
 
-    $curl = curl_init($url);
-    curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $curlInit = curl_init($url);
+    curl_setopt($curlInit, CURLOPT_URL, $url);
+    curl_setopt($curlInit, CURLOPT_RETURNTRANSFER, true);
 
     $headers = array(
       "Authorization: Bearer $api_key",
     );
 
-    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($curlInit, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($curlInit, CURLOPT_SSL_VERIFYPEER, false);
 
-    $curlResponse = curl_exec($curl);
+    $curlResponse = curl_exec($curlInit);
+    dd($curlResponse);
 
     $response = json_decode($curlResponse, 1);
-    curl_close($curlResponse);
+    if ($curlResponse == false) {
+      curl_error($curlInit);
+    }
+
+    curl_close($curlInit);
 
     return $response;
   }
@@ -67,7 +72,6 @@ class APIToolkitService
 
     $clientmetadata = self::credentials($url, $APIKey);
     if (!$clientmetadata) {
-      dd($clientmetadata);
       return new InvalidClientMetadataException("Unable to query APIToolkit for client metadata, do you have a correct APIKey? ");
     }
 

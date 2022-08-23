@@ -53,7 +53,9 @@ class APIToolkitService
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
     $curlResponse = curl_exec($curl);
+
     $response = json_decode($curlResponse, 1);
+    curl_close($curlResponse);
 
     return $response;
   }
@@ -65,6 +67,7 @@ class APIToolkitService
 
     $clientmetadata = self::credentials($url, $APIKey);
     if (!$clientmetadata) {
+      dd($clientmetadata);
       return new InvalidClientMetadataException("Unable to query APIToolkit for client metadata, do you have a correct APIKey? ");
     }
 

@@ -10,10 +10,10 @@ Run the following command to install the package:
 composer require apitoolkit/apitoolkit-php
 ```
 
-Set the `APITOOLKIT_API_KEY` environment variable to your API key in you `.env` file, should look like this:
+Set the `APITOOLKIT_KEY` environment variable to your API key in you `.env` file, should look like this:
 
 ```
-APITOOLKIT_API_KEY=xxxxxx-xxxxx-xxxxxx-xxxxxx-xxxxxx
+APITOOLKIT_KEY=xxxxxx-xxxxx-xxxxxx-xxxxxx-xxxxxx
 ```
 
 ## Usage

@@ -1,5 +1,5 @@
 {
-  "name": "apitoolkit/apitoolkit-php",
+  "name": "apitoolkit/apitoolkit-laravel",
   "description": "A PHP/Laravel SDK Wrapper for APIToolkit. It monitors incoming traffic, gathers the requests and sends the request to the apitoolkit servers.",
   "type": "library",
   "license": "MIT",

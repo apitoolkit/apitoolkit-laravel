@@ -11,13 +11,18 @@ use Mockery;
 
 /**
  * @covers APIToolkit\Http\Middleware
+ * Currently the tests result in hitting apitoolkit servers to get credentials. 
+ * This expectes the APITOOLKIT_KEY environment variable to have been set.
+ * TODO: the tests should not affect or hit any 3rd party servers except explicitly required 
+ *
  */
 class APIToolkitTest extends TestCase
 {
   // Define environment setup
   protected function getEnvironmentSetUp($app)
   {
-    // setup environment here
+    $app['config']->set('logging.default', 'stderr');
+    $app['router']->aliasMiddleware('apitoolkit', APIToolkit::class);
   }
 
   protected function tearDown(): void
@@ -53,6 +58,57 @@ class APIToolkitTest extends TestCase
       ]
     }
     ';
+
+  public function testMiddleware()
+  {
+    $expectedJSON = '
+    { "store": {
+        "book": [
+          { "category": "[CLIENT_REDACTED]",
+            "author": "Nigel Rees"
+          },
+          { "category": "[CLIENT_REDACTED]",
+            "author": "Evelyn Waugh"
+          }
+        ]
+      }
+    }
+    ';
+    // Define a route for testing
+    $this->app['router']->get('/test-route/{id}/{name}', function (Request $request) {
+      $testJSON = '
+    { "store": {
+        "book": [
+          { "category": "reference",
+            "author": "Nigel Rees"
+          },
+          { "category": "fiction",
+            "author": "Evelyn Waugh"
+          }
+        ]
+      }
+    }
+    ';
+      return response()->json(json_decode($testJSON), 200);
+    })->middleware('apitoolkit');
+
+    $response = $this->get('/test-route/id22/nameVal');
+    $testJSON = '
+    { "store": {
+        "book": [
+          { "category": "reference",
+            "author": "Nigel Rees"
+          },
+          { "category": "fiction",
+            "author": "Evelyn Waugh"
+          }
+        ]
+      }
+    }
+    ';
+    $response->assertStatus(200)
+      ->assertJson(json_decode($testJSON, true));
+  }
 
   public function test_empty_redected_json_same_as_input(): void
   {
@@ -154,18 +210,16 @@ class APIToolkitTest extends TestCase
       ->method('publish')
       ->with($this->callback(function ($subjectStr) {
         $data = json_decode($subjectStr['data']);
-        $this->assertEquals($data -> status_code, 200);
+        $this->assertEquals($data->status_code, 200);
         $this->assertEquals($data->method, "GET");
         $this->assertEquals($data->raw_url, "/example?query_param1=value1&query_param2=value2");
         $this->assertEquals($data->url_path, "/example?query_param1=value1&query_param2=value2");
-        $this->assertEquals($data->query_params -> query_param1, "value1");
-        $this->assertEquals($data->query_params -> query_param2, "value2");
+        $this->assertEquals($data->query_params->query_param1, "value1");
+        $this->assertEquals($data->query_params->query_param2, "value2");
         // $this->assertEquals($data->request_headers->'custom-header'[0], "CustomValue");
         $this->assertEquals($data->response_body, base64_encode("Body content here"));
         return isset($subjectStr['data']);
       }));
-
-
 
     $apiToolkit = new APIToolkit();
     $apiToolkit->debug = false;

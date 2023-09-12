@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Google\Cloud\PubSub\PubSubClient;
-use Google\Cloud\PubSub\Topic;
 use Exception;
 use JsonPath\JsonObject;
 use JsonPath\InvalidJsonException;
@@ -98,19 +96,19 @@ class APIToolkit
 
     $data = json_encode($payload, JSON_UNESCAPED_SLASHES);
     if ($this->debug) {
-      print_r($data);
+      \Log::debug("APIToolkit: payload" . $data);
     }
     $this->pubsubTopic->publish([
       "data" => $data
     ]);
   }
 
-  public function log(Request $request, Response $response, $startTime)
+  public function log(Request $request, $response, $startTime)
   {
     if (!$this->pubsubTopic) return;
     $payload = $this->buildPayload($request, $response, $startTime, $this->projectId);
     if ($this->debug) {
-      print_r($payload);
+      \Log::debug("APIToolkit: payload", $payload);
     }
     $this->publishMessage($payload);
   }

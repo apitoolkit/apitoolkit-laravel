@@ -41,7 +41,8 @@
     "illuminate/http": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0",
     "ext-json": "*",
     "ext-curl": "*",
-    "galbar/jsonpath": "^3.0"
+    "galbar/jsonpath": "^3.0",
+    "php": "^8.0"
   },
   "require-dev": {
     "orchestra/testbench": "^8.10",

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Google\Cloud\PubSub\Topic;
 use Mockery;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @covers APIToolkit\Http\Middleware
@@ -224,6 +225,9 @@ class APIToolkitTest extends TestCase
     $apiToolkit = new APIToolkit();
     $apiToolkit->debug = false;
     $apiToolkit->pubsubTopic = $mockedTopic;
-    $apiToolkit->log($request, $response, hrtime(true));
+    $newUuid = Uuid::uuid4();
+    $msg_id = $newUuid->toString();
+
+    $apiToolkit->log($request, $response, hrtime(true), $msg_id);
   }
 }

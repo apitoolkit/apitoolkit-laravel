@@ -10,6 +10,8 @@ use Google\Cloud\PubSub\PubSubClient;
 use Exception;
 use JsonPath\JsonObject;
 use JsonPath\InvalidJsonException;
+use Ramsey\Uuid\Uuid;
+
 
 class APIToolkit
 {
@@ -19,6 +21,9 @@ class APIToolkit
   private array $redactHeaders = [];
   private array $redactRequestBody = [];
   private array $redactResponseBody = [];
+  private array $errors = [];
+  private ?string $serviceVersion;
+  private array $tags;
 
   public function __construct()
   {
@@ -37,16 +42,27 @@ class APIToolkit
       Log::debug('APIToolkit: Credentials loaded from server correctly');
     }
   }
+  public function addError($error)
+  {
+    $this->errors[] = $error;
+  }
 
   public function handle(Request $request, Closure $next)
   {
+    $newUuid = Uuid::uuid4();
+    $msg_id = $newUuid->toString();
+    $request = $request->merge([
+      'apitoolkitData' => [
+        'msg_id' => $msg_id,
+        'project_id' => $this->projectId,
+        "client" => $this,
+      ]
+    ]);
     $startTime = hrtime(true);
     $response = $next($request);
-    $this->log($request, $response, $startTime);
+    $this->log($request, $response, $startTime, $msg_id);
     return $response;
   }
-
-
 
   public static function credentials($url, $api_key)
   {
@@ -103,10 +119,10 @@ class APIToolkit
     ]);
   }
 
-  public function log(Request $request, $response, $startTime)
+  public function log(Request $request, $response, $startTime, $msg_id)
   {
     if (!$this->pubsubTopic) return;
-    $payload = $this->buildPayload($request, $response, $startTime, $this->projectId);
+    $payload = $this->buildPayload($request, $response, $startTime, $this->projectId, $msg_id);
     if ($this->debug) {
       Log::debug("APIToolkit: payload", $payload);
     }
@@ -115,7 +131,7 @@ class APIToolkit
 
   // payload static method deterministically converts a request, response object, a start time and a projectId
   // into a pauload json object which APIToolkit server is able to interprete.
-  public function buildPayload(Request $request, $response, $startTime, $projectId)
+  public function buildPayload(Request $request, $response, $startTime, $projectId, $msg_id)
   {
     return [
       'duration' => round(hrtime(true) - $startTime),
@@ -135,6 +151,9 @@ class APIToolkit
       'sdk_type' => 'PhpLaravel',
       'status_code' => $response->getStatusCode(),
       'timestamp' => (new \DateTime())->format('c'),
+      'msg_id' => $msg_id,
+      'tags' => $this->tags,
+      'service_version' => $this->serviceVersion,
       'url_path' => $request->route() ?  "/" . $request->route()->uri : $request->getRequestUri(),
     ];
   }

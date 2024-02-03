@@ -96,7 +96,7 @@ class APIToolkit
 
     $data = json_encode($payload, JSON_UNESCAPED_SLASHES);
     if ($this->debug) {
-      \Log::debug("APIToolkit: payload" . $data);
+      Log::debug("APIToolkit: payload" . $data);
     }
     $this->pubsubTopic->publish([
       "data" => $data
@@ -108,7 +108,7 @@ class APIToolkit
     if (!$this->pubsubTopic) return;
     $payload = $this->buildPayload($request, $response, $startTime, $this->projectId);
     if ($this->debug) {
-      \Log::debug("APIToolkit: payload", $payload);
+      Log::debug("APIToolkit: payload", $payload);
     }
     $this->publishMessage($payload);
   }

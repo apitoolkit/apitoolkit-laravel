@@ -16,6 +16,9 @@ Set the `APITOOLKIT_KEY` environment variable to your API key in you `.env` file
 APITOOLKIT_KEY=xxxxxx-xxxxx-xxxxxx-xxxxxx-xxxxxx
 ```
 
+# Requirements
+- For laravel, apitoolkit uses the cache to prevent reinitializing the sdk with each request. So make sure you have laravel cache setup for your service
+
 ## Usage
 
 Register the middleware in the `app/Http/Kernel.php` file under the correct middleware group eg `api`, or at the root:
@@ -73,5 +76,90 @@ Route::get('/', function () {
 })->middleware('apitoolkit');
 ```
 
-# Requirements
-- For laravel, apitoolkit uses the cache to prevent reinitializing the sdk with each request. So make sure you have laravel cache setup for your service
+### Configuration Options
+Other optional environment variables to configure APIToolkit with
+`APITOOLKIT_TAGS`:***array***  A list of tags for your services
+`APITOOLKIT_SERVICE_VERSION`: ***string*** The version of your application.
+`APITOOLKIT_REDACT_HEADERS`:***array*** A list of headers to be redacted.
+`APITOOLKIT_REDACT_REQUEST_BODY`: ***array*** A list of request body fields (jsonpaths) to be redacted
+`APITOOLKIT_REDACT_RESPONSE_BODY`: ***array*** A list of response body fields (jsonpaths) to be redacted
+`APITOOLKIT_DEBUG`: ***boolean*** Set to true to enable debug
+
+
+## Observing Outgoing Requests with Guzzle in APIToolkit-Slim SDK
+
+The SDK facilitates the observation of outgoing requests within your application using Guzzle middleware. This feature allows you to monitor and track details about your API calls, aiding in debugging and performance analysis.
+
+To observe outgoing requests, utilize the `observeGuzzle` method of the `APIToolkitLaravel` class. Pass the  `$request` object to this method, and it will configure Guzzle with monitoring capabilities.
+
+```php
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use APIToolkit\APIToolkitLaravel;
+
+Route::get('/user', function (Request $request) {
+    $options = [
+        "pathPattern" => "/repos/{owner}/{repo}", # For observing Requests with Path Params
+        "redactHeaders" => ["Server"], # headers redaction
+        "redactRequestBody" => ["$.password"], 
+        "redactResponseBody" => ["$.password"]
+    ];
+    $guzzleClient = APIToolkitLaravel::observeGuzzle($request, $options);
+    $responseFromGuzzle = $guzzleClient->request('GET', 'https://api.github.com/repos/guzzle/guzzle?foobar=123');
+    $response = $responseFromGuzzle->getBody()->getContents();
+
+    return $response;
+}
+```
+
+
+## Reporting Errors to APIToolkit
+
+APIToolkit is capable of detecting API issues, but for more detailed insight, reporting server errors associated with a request is invaluable. To accomplish this, utilize the `reportError` method of `APIToolkitLaravel` by passing both the error and the request.
+
+To streamline error reporting, consider integrating it into your Laravel Exceptions handler, enabling automatic error reporting, or handle exceptions manually when necessary.
+
+For manual error reporting, implement the following code snippet:
+
+```php
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use APIToolkit\APIToolkitLaravel;
+
+Route::get('/user', function (Request $request) {
+    try {
+        throw new Exception("Custom user error");
+        return response()->json(["hello" => "world"]);
+    } catch (Exception $e) {
+        // Report the error to APIToolkit
+        APIToolkitLaravel::reportError($e, $request);
+        return response()->json(["error" => $e->getMessage()]);
+    }
+});
+```
+
+For automatic reporting of all uncaught exceptions within a request, modify your Laravel Exceptions handler as follows:
+
+```php
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use APIToolkit\APIToolkitLaravel;
+use Throwable;
+
+class Handler extends ExceptionHandler
+{
+    /**
+     * Register the exception handling callbacks for the application.
+     */
+    public function register(): void
+    {
+        $this->reportable(function (Throwable $e) {
+            // Report the error to APIToolkit
+            $request = request();
+            APIToolkitLaravel::reportError($e, $request);
+        });
+    }
+}
+```
+
+Remember, you can report as many errors as necessary for each request, ensuring comprehensive error tracking and resolution.
+

@@ -7,15 +7,13 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware as GuzzleMiddleware;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
 
-
+include "utils.php";
 class APIToolkitLaravel
 {
     public static  function observeGuzzle($request, $options)
     {
         $handlerStack = HandlerStack::create();
         $request_info = [];
-        $query = "";
-        parse_str($request->getUri()->getQuery(), $query);
         $handlerStack->push(GuzzleMiddleware::mapRequest(function ($request) use (&$request_info, $options) {
             $query = "";
             parse_str($request->getUri()->getQuery(), $query);
@@ -34,7 +32,7 @@ class APIToolkitLaravel
         }));
 
         $handlerStack->push(GuzzleMiddleware::mapResponse(function ($response) use (&$request_info, $request, $options) {
-            $apitoolkit = $request->getAttribute("apitoolkitData");
+            $apitoolkit = $request->apitoolkitData;
             $client = $apitoolkit['client'];
             $msg_id = $apitoolkit['msg_id'];
             $projectId = $apitoolkit['project_id'];

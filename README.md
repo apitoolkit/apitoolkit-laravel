@@ -1,5 +1,4 @@
 # APIToolKit Laravel SDK
-
 A PHP/Laravel SDK Wrapper for APIToolkit. It monitors incoming traffic, gathers the requests and sends the request to the apitoolkit servers.
 
 ## Installation
@@ -17,7 +16,9 @@ APITOOLKIT_KEY=xxxxxx-xxxxx-xxxxxx-xxxxxx-xxxxxx
 ```
 
 # Requirements
-- For laravel, apitoolkit uses the cache to prevent reinitializing the sdk with each request. So make sure you have laravel cache setup for your service
+
+- For laravel, apitoolkit uses the cache to prevent reinitializing the sdk with each request. So make sure you have laravel cache setup for your service.
+  Read on [ PHP Laravel Cache Setup for Apitoolkit to Avoid SDK Reinit](https://apitoolkit.io/blog/how-to-setup-php-laravel-cache-for-apitoolkit-to-avoid-sdk-reinitialization/).
 
 ## Usage
 
@@ -77,20 +78,20 @@ Route::get('/', function () {
 ```
 
 ### Configuration Options
-Other optional environment variables to configure APIToolkit with
-`APITOOLKIT_TAGS`:***array***  A list of tags for your services
-`APITOOLKIT_SERVICE_VERSION`: ***string*** The version of your application.
-`APITOOLKIT_REDACT_HEADERS`:***array*** A list of headers to be redacted.
-`APITOOLKIT_REDACT_REQUEST_BODY`: ***array*** A list of request body fields (jsonpaths) to be redacted
-`APITOOLKIT_REDACT_RESPONSE_BODY`: ***array*** A list of response body fields (jsonpaths) to be redacted
-`APITOOLKIT_DEBUG`: ***boolean*** Set to true to enable debug
 
+Other optional environment variables to configure APIToolkit with
+`APITOOLKIT_TAGS`:**_array_** A list of tags for your services
+`APITOOLKIT_SERVICE_VERSION`: **_string_** The version of your application.
+`APITOOLKIT_REDACT_HEADERS`:**_array_** A list of headers to be redacted.
+`APITOOLKIT_REDACT_REQUEST_BODY`: **_array_** A list of request body fields (jsonpaths) to be redacted
+`APITOOLKIT_REDACT_RESPONSE_BODY`: **_array_** A list of response body fields (jsonpaths) to be redacted
+`APITOOLKIT_DEBUG`: **_boolean_** Set to true to enable debug
 
 ## Observing Outgoing Requests with Guzzle in APIToolkit-Slim SDK
 
 The SDK facilitates the observation of outgoing requests within your application using Guzzle middleware. This feature allows you to monitor and track details about your API calls, aiding in debugging and performance analysis.
 
-To observe outgoing requests, utilize the `observeGuzzle` method of the `APIToolkitLaravel` class. Pass the  `$request` object to this method, and it will configure Guzzle with monitoring capabilities.
+To observe outgoing requests, utilize the `observeGuzzle` method of the `APIToolkitLaravel` class. Pass the `$request` object to this method, and it will configure Guzzle with monitoring capabilities.
 
 ```php
 use Illuminate\Http\Request;
@@ -101,7 +102,7 @@ Route::get('/user', function (Request $request) {
     $options = [
         "pathPattern" => "/repos/{owner}/{repo}", # For observing Requests with Path Params
         "redactHeaders" => ["Server"], # headers redaction
-        "redactRequestBody" => ["$.password"], 
+        "redactRequestBody" => ["$.password"],
         "redactResponseBody" => ["$.password"]
     ];
     $guzzleClient = APIToolkitLaravel::observeGuzzle($request, $options);
@@ -111,7 +112,6 @@ Route::get('/user', function (Request $request) {
     return $response;
 }
 ```
-
 
 ## Reporting Errors to APIToolkit
 

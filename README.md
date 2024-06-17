@@ -35,7 +35,7 @@ composer require apitoolkit/apitoolkit-laravel
 First, add the `APITOOLKIT_KEY` environment variable to your `.env` file like so:
 
 ```sh
-APITOOLKIT_KEY=gKMdJZdMPikzn91teStINgjBSYCe6bjitWoNTwORK9Y3C
+APITOOLKIT_KEY={ENTER_YOUR_API_KEY_HERE}
 ```
 
 Next, register the middleware in the `app/Http/Kernel.php` file under the correct middleware group (e.g., `api`) or at the root, like so:

@@ -30,7 +30,7 @@ class APIToolkit
     $apitoolkitCredentials = Cache::remember('apitoolkitInstance', 2000, function () {
       return APIToolkit::getCredentials();
     });
-    $this->tags = env('APITOOLKIT_TAGS', []);
+    $this->tags = array_map('trim', explode(",", env('APITOOLKIT_TAGS', "")));
     $this->serviceVersion = env('APITOOLKIT_SERVICE_VERSION', null);
     $this->redactHeaders = env('APITOOLKIT_REDACT_HEADERS', []);
     $this->redactRequestBody = env('APITOOLKIT_REDACT_REQUEST_BODY', []);
@@ -162,7 +162,7 @@ class APIToolkit
       'tags' => $this->tags,
       'errors' => $this->errors,
       'service_version' => $this->serviceVersion,
-      'url_path' => $request->route() ?  "/" . $request->route()->uri : $request->getRequestUri(),
+      'url_path' => $request->route() ? $request->route()->uri : $request->getRequestUri(),
     ];
   }
 

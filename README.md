@@ -41,30 +41,39 @@ APITOOLKIT_KEY={ENTER_YOUR_API_KEY_HERE}
 Next, register the middleware in the `app/Http/Kernel.php` file under the correct middleware group (e.g., `api`) or at the root, like so:
 
 ```php
- [
-            ...
-            \APIToolkit\Http\Middleware\APIToolkit::class,
-            ...
+&lt;?php
+
+namespace App\Http;
+
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
+
+class Kernel extends HttpKernel
+{
+    protected $middlewareGroups = [
+        'api' => [
+            // Other middleware here...
+            \APIToolkit\Http\Middleware\APIToolkit::class, // Initialize the APItoolkit client
         ],
     ];
-    ...
 }
 ```
 
 Alternatively, if you want to monitor specific routes, you can register the middleware, like so:
 
 ```php
-    /**
-     * The application's route middleware.
-     *
-     * These middleware may be assigned to groups or used individually.
-     *
-     * @var array
-     */
+&lt;?php
+
+namespace App\Http;
+
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
+
+class Kernel extends HttpKernel
+{
     protected $routeMiddleware = [
-        ...
+        // Other middleware here...
         'apitoolkit' => \APIToolkit\Http\Middleware\APIToolkit::class,
     ];
+}
 ```
 
 Then you can use the `apitoolkit` middleware in your routes like so:

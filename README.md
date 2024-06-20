@@ -41,7 +41,7 @@ APITOOLKIT_KEY={ENTER_YOUR_API_KEY_HERE}
 Next, register the middleware in the `app/Http/Kernel.php` file under the correct middleware group (e.g., `api`) or at the root, like so:
 
 ```php
-&lt;?php
+<?php
 
 namespace App\Http;
 
@@ -61,7 +61,7 @@ class Kernel extends HttpKernel
 Alternatively, if you want to monitor specific routes, you can register the middleware, like so:
 
 ```php
-&lt;?php
+<?php
 
 namespace App\Http;
 

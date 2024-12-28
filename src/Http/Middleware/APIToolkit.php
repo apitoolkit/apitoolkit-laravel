@@ -99,3 +99,4 @@ class APIToolkit
 class InvalidClientMetadataException extends Exception
 {
 }
+

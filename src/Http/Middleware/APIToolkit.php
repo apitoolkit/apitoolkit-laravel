@@ -3,9 +3,13 @@
 namespace APIToolkit\Http\Middleware;
 
 use Illuminate\Support\Facades\Log;
+use OpenTelemetry\SDK\Trace\TracerProvider;
+use OpenTelemetry\API\Globals;
+use Illuminate\Http\Request;
 use Closure;
 use Exception;
 use Ramsey\Uuid\Uuid;
+use  Apitoolkit\Common\Shared;
 
 class APIToolkit
 {
@@ -17,6 +21,7 @@ class APIToolkit
   private ?string $serviceVersion;
   private ?string $serviceName;
   private array $tags = [];
+  private TracerProvider $tracerProvider;
 
   public function __construct()
   {
@@ -41,13 +46,16 @@ class APIToolkit
       'serviceName' => $this->serviceName,
     ];
 
-    $this->debug = env('APITOOLKIT_DEBUG', false);
+    $this->tracerProvider = Globals::tracerProvider();
+
     if ($this->debug) {
       Log::debug('APIToolkit: Credentials loaded from server correctly');
     }
   }
   public function handle(Request $request, Closure $next)
   {
+    $tracer = $this->tracerProvider->getTracer("apitoolkit-http-tracer");
+    $span = $tracer->spanBuilder('apitoolkit-http-span')->startSpan();
     $newUuid = Uuid::uuid4();
     $msg_id = $newUuid->toString();
     $request = $request->merge([
@@ -57,17 +65,16 @@ class APIToolkit
       ]
     ]);
     $response = $next($request);
-    $this->log($request, $response, $msg_id);
+    $this->log($request, $response, $msg_id, $span);
     return $response;
   }
   public function log(Request $request, $response, $msg_id, $span)
   {
-    $payload = $this->buildPayload($request, $response, $startTime, $this->projectId, $msg_id);
     if ($this->debug) {
       Log::debug("APIToolkit: payload", $payload);
     }
     $errors = $request->get('apitoolkitData')['errors'] ?? [];
-    Apitoolkit\Common\setAttributes(
+    Shared::setAttributes(
       $span,
       $request->getHttpHost(),
       $response->getStatusCode(),
@@ -92,4 +99,3 @@ class APIToolkit
 class InvalidClientMetadataException extends Exception
 {
 }
-

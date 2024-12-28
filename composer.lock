@@ -4,31 +4,31 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d30d153aad2206bc90aac5d90f9a840",
+    "content-hash": "dce5cf4e7be930e7b42888f805715bf0",
     "packages": [
         {
             "name": "apitoolkit/common",
-            "version": "v1.0.0",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apitoolkit/apitoolkit-php.git",
-                "reference": "7f67929706fe86e8f20169f85596eca38f36e74c"
+                "reference": "f0d7914366bfd535731bdd151857dcf024a89f0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apitoolkit/apitoolkit-php/zipball/7f67929706fe86e8f20169f85596eca38f36e74c",
-                "reference": "7f67929706fe86e8f20169f85596eca38f36e74c",
+                "url": "https://api.github.com/repos/apitoolkit/apitoolkit-php/zipball/f0d7914366bfd535731bdd151857dcf024a89f0e",
+                "reference": "f0d7914366bfd535731bdd151857dcf024a89f0e",
                 "shasum": ""
             },
             "require": {
                 "galbar/jsonpath": "^3.0",
-                "guzzlehttp/guzzle": "^7.9",
-                "open-telemetry/api": "^1.1"
+                "guzzlehttp/guzzle": "^7.0",
+                "open-telemetry/api": "^1.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Apitoolkit\\Common\\": "src/"
+                    "Apitoolkit\\Common\\": "src/Common/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -44,9 +44,9 @@
             "description": "API Toolkit Common Library",
             "support": {
                 "issues": "https://github.com/apitoolkit/apitoolkit-php/issues",
-                "source": "https://github.com/apitoolkit/apitoolkit-php/tree/v1.0.0"
+                "source": "https://github.com/apitoolkit/apitoolkit-php/tree/v1.0.2"
             },
-            "time": "2024-12-28T11:17:13+00:00"
+            "time": "2024-12-28T20:26:00+00:00"
         },
         {
             "name": "brick/math",

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Log;
 use Closure;
 use Exception;
 use Ramsey\Uuid\Uuid;
-use APIToolkit\Common;
+use Apitoolkit\Common;
 
 class APIToolkit
 {

@@ -6,7 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware as GuzzleMiddleware;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
-use APIToolkit\Common as Common;
+use Apitoolkit\Common;
 
 class APIToolkitLaravel
 {

@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Log;
 use Closure;
 use Exception;
 use Ramsey\Uuid\Uuid;
-use Apitoolkit\Common;
 
 class APIToolkit
 {
@@ -68,7 +67,7 @@ class APIToolkit
       Log::debug("APIToolkit: payload", $payload);
     }
     $errors = $request->get('apitoolkitData')['errors'] ?? [];
-    Common.setAttributes(
+    Apitoolkit\Common\setAttributes(
       $span,
       $request->getHttpHost(),
       $response->getStatusCode(),

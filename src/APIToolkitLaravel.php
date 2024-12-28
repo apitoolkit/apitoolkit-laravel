@@ -2,19 +2,13 @@
 
 namespace APIToolkit;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware as GuzzleMiddleware;
-use GuzzleHttp\Psr7\Response as GuzzleResponse;
-use Apitoolkit\Common;
-
 class APIToolkitLaravel
 {
     public static  function observeGuzzle($request, $options) {
-         return Common::observeGuzzle($request, $options);
+         return  Apitoolkit\Common\observeGuzzle($request, $options);
     }
     public static function reportError($error, $request)
     {
-        return Common::reportError($error, $request);
+        return  Apitoolkit\Common\reportError($error, $request);
     }
 }

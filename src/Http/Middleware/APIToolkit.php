@@ -74,11 +74,13 @@ class APIToolkit
       Log::debug("APIToolkit: payload", $payload);
     }
     $errors = $request->get('apitoolkitData')['errors'] ?? [];
+    $query = $request->query();
+    unset($query['apitoolkitData']);
     Shared::setAttributes(
       $span,
       $request->getHttpHost(),
       $response->getStatusCode(),
-      $request->query->all(),
+      $query,
       $request->route() ? $request->route()->parameters() : [],
       $request->headers->all(),
       $response->headers->all(),
@@ -99,4 +101,3 @@ class APIToolkit
 class InvalidClientMetadataException extends Exception
 {
 }
-

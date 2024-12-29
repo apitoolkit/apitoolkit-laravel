@@ -40,11 +40,17 @@
     "illuminate/http": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
     "ext-json": "*",
     "ramsey/uuid": "^4.7",
-    "apitoolkit/common": "^1.0.2",
+    "apitoolkit/common": "^1.0",
     "open-telemetry/api": "^1.1"
   },
   "require-dev": {
     "orchestra/testbench": "^8.10",
     "mockery/mockery": "^1.6"
+  },
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": true,
+      "tbachert/spi": true
+    }
   }
 }

@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d30d153aad2206bc90aac5d90f9a840",
+    "content-hash": "ff2b6f1d43d5745b4cf3443d5874c077",
     "packages": [
         {
             "name": "apitoolkit/common",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apitoolkit/apitoolkit-php.git",
-                "reference": "fb100b5a3b610ada29c516186019a410b10e0086"
+                "reference": "1b45e5fad538841d5f21563e99d034faebee8b2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apitoolkit/apitoolkit-php/zipball/fb100b5a3b610ada29c516186019a410b10e0086",
-                "reference": "fb100b5a3b610ada29c516186019a410b10e0086",
+                "url": "https://api.github.com/repos/apitoolkit/apitoolkit-php/zipball/1b45e5fad538841d5f21563e99d034faebee8b2a",
+                "reference": "1b45e5fad538841d5f21563e99d034faebee8b2a",
                 "shasum": ""
             },
             "require": {
@@ -45,9 +45,9 @@
             "description": "API Toolkit Common Library",
             "support": {
                 "issues": "https://github.com/apitoolkit/apitoolkit-php/issues",
-                "source": "https://github.com/apitoolkit/apitoolkit-php/tree/v1.0.3"
+                "source": "https://github.com/apitoolkit/apitoolkit-php/tree/v1.0.4"
             },
-            "time": "2024-12-29T20:00:17+00:00"
+            "time": "2025-01-02T08:55:15+00:00"
         },
         {
             "name": "brick/math",

@@ -52,6 +52,12 @@ class APIToolkit
       Log::debug('APIToolkit: Credentials loaded from server correctly');
     }
   }
+
+  public function addError($error)
+  {
+    $this->errors[] = $error;
+  }
+
   public function handle(Request $request, Closure $next)
   {
     $tracer = $this->tracerProvider->getTracer("apitoolkit-http-tracer");
@@ -61,7 +67,7 @@ class APIToolkit
     $request = $request->merge([
       'apitoolkitData' => [
         'msg_id' => $msg_id,
-        'errors' => [],
+        'client' => $this,
       ]
     ]);
     $response = $next($request);
@@ -73,7 +79,7 @@ class APIToolkit
     if ($this->debug) {
       Log::debug("APIToolkit: payload", $payload);
     }
-    $errors = $request->get('apitoolkitData')['errors'] ?? [];
+    $errors = $this->errors;
     $query = $request->query();
     unset($query['apitoolkitData']);
     Shared::setAttributes(

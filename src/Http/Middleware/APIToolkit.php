@@ -35,13 +35,13 @@ class APIToolkit
     $this->captureResponseBody = env('APITOOLKIT_CAPTURE_RESPONSE_BODY', false);
     $this->debug = env('APITOOLKIT_DEBUG', false);
     $this->config = [
-      'redact_headers' => $this->redactHeaders,
-      'redact_request_body' => $this->redactRequestBody,
-      'redact_response_body' => $this->redactResponseBody,
+      'redactHeaders' => $this->redactHeaders,
+      'redactRequestBody' => $this->redactRequestBody,
+      'redactResponseBody' => $this->redactResponseBody,
       'serviceVersion' => $this->serviceVersion,
       'tags' => $this->tags,
-      'capture_request_body' => $this->captureRequestBody,
-      'capture_response_body' => $this->captureResponseBody,
+      'captureRequestBody' => $this->captureRequestBody,
+      'captureResponseBody' => $this->captureResponseBody,
       'debug' => $this->debug,
       'serviceName' => $this->serviceName,
     ];
@@ -77,7 +77,7 @@ class APIToolkit
   public function log(Request $request, $response, $msg_id, $span)
   {
     if ($this->debug) {
-      Log::debug("APIToolkit: payload", $payload);
+      Log::debug("APIToolkit: sending payload");
     }
     $errors = $this->errors;
     $query = $request->query();
@@ -101,6 +101,9 @@ class APIToolkit
       'PhpLaravel',
       null
     );
+    if ($this->debug) {
+      Log::debug("APIToolkit: payload sent");
+    }
   }
 }
 

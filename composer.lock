@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "apitoolkit/common",
-            "version": "v1.0.4",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apitoolkit/apitoolkit-php.git",
-                "reference": "1b45e5fad538841d5f21563e99d034faebee8b2a"
+                "reference": "101928ed5dcf601bc304e3ff481401a0693a90a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apitoolkit/apitoolkit-php/zipball/1b45e5fad538841d5f21563e99d034faebee8b2a",
-                "reference": "1b45e5fad538841d5f21563e99d034faebee8b2a",
+                "url": "https://api.github.com/repos/apitoolkit/apitoolkit-php/zipball/101928ed5dcf601bc304e3ff481401a0693a90a7",
+                "reference": "101928ed5dcf601bc304e3ff481401a0693a90a7",
                 "shasum": ""
             },
             "require": {
@@ -45,9 +45,9 @@
             "description": "API Toolkit Common Library",
             "support": {
                 "issues": "https://github.com/apitoolkit/apitoolkit-php/issues",
-                "source": "https://github.com/apitoolkit/apitoolkit-php/tree/v1.0.4"
+                "source": "https://github.com/apitoolkit/apitoolkit-php/tree/v1.0.5"
             },
-            "time": "2025-01-02T08:55:15+00:00"
+            "time": "2025-01-06T14:32:18+00:00"
         },
         {
             "name": "brick/math",

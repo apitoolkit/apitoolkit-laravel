@@ -81,6 +81,14 @@ class APIToolkit
     }
     $errors = $this->errors;
     $query = $request->query();
+    $requestBody = "";
+    if ($this->captureRequestBody) {
+      $requestBody = $request->getContent();
+    }
+    $responseBody = "";
+    if ($this->captureResponseBody) {
+      $responseBody = $response->getContent();
+    }
     unset($query['apitoolkitData']);
     Shared::setAttributes(
       $span,
@@ -94,8 +102,8 @@ class APIToolkit
       $request->getRequestUri(),
       $msg_id,
       $request->route() ? $request->route()->uri : $request->getRequestUri(),
-      $request->getContent(),
-      $response->getContent(),
+      $requestBody,
+      $responseBody,
       $errors,
       $this->config,
       'PhpLaravel',
